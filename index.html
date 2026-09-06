@@ -136,6 +136,29 @@
 .ct4 .ct-aistatus.bad{color:var(--warn)}
 .ct4 .ct-foot{padding:6px 18px 20px;text-align:center;font-size:11px;color:var(--muted);line-height:1.8}
 .ct4 .ct-foot b{color:var(--acc)}
+.ct4 .ct-points{grid-column:1/-1;border:1px solid var(--goldSoft);border-color:color-mix(in srgb,var(--gold) 45%,transparent);background:var(--goldSoft);border-radius:14px;padding:13px 15px;margin-bottom:12px}
+.ct4 .ct-points .ct-plbl{font-size:11px;letter-spacing:1.5px;font-weight:800;color:var(--gold);margin-bottom:6px}
+.ct4 .ct-points ol{list-style:none}
+.ct4 .ct-points li{font-size:14px;line-height:1.6;padding:5px 0 5px 28px;position:relative;font-weight:600}
+.ct4 .ct-points li::before{content:attr(data-n);position:absolute;left:0;top:6px;width:18px;height:18px;border-radius:50%;background:var(--gold);color:var(--bg);font-size:11px;font-weight:800;display:grid;place-items:center}
+.ct4 details.ct-more{grid-column:1/-1;border:1px dashed var(--line);border-radius:13px;margin-bottom:10px}
+.ct4 details.ct-more summary{cursor:pointer;list-style:none;padding:10px 14px;font-size:13px;font-weight:600;color:var(--acc)}
+.ct4 details.ct-more summary::-webkit-details-marker{display:none}
+.ct4 details.ct-more summary::before{content:"＋ "}
+.ct4 details.ct-more[open] summary::before{content:"－ "}
+.ct4 .ct-more-body{padding:2px 12px 12px}
+.ct4 details.ct-stats{margin:0 18px 6px;border:1px dashed var(--line);border-radius:13px;padding:0 13px;background:var(--surface2)}
+.ct4 details.ct-stats summary{cursor:pointer;list-style:none;padding:9px 2px;font-size:12px;color:var(--muted);font-weight:600}
+.ct4 details.ct-stats summary::-webkit-details-marker{display:none}
+.ct4 details.ct-stats summary::before{content:"📊 "}
+.ct4 .ct-statsbody{padding:2px 2px 12px;font-size:12.5px;color:var(--ink)}
+.ct4 .ct-statgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:8px 0}
+.ct4 .ct-statcell{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.ct4 .ct-statcell b{display:block;font-size:17px}
+.ct4 .ct-statcell span{font-size:11px;color:var(--muted)}
+.ct4 .ct-qlist{margin-top:8px}
+.ct4 .ct-qlist div{padding:4px 0;border-top:1px dashed var(--line);font-size:12px;color:var(--muted);display:flex;gap:8px;justify-content:space-between}
+.ct4 .ct-qlist div b{color:var(--ink);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:70%}
 @media (max-width:420px){.ct4 .ct-hero{font-size:20px}.ct4 .ct-herotext{font-size:17px}}
 </style>
 
@@ -151,8 +174,8 @@
   <main class="ct-body">
     <h1 class="ct-hero">一句话没看懂？先找到你<em>卡在哪</em>，再讲给你听。</h1>
     <p class="ct-sub">
-      两种模式：<b>基础模式</b>用内置词库拆出你卡住的词（离线可用）；<b>AI 模式</b>整句翻译成人话，并说明“这是简化理解，实际还受什么影响”。
-      划词入口通过浏览器插件 / macOS 快速操作实现（安装包见仓库），本页支持 URL 参数 <code>?text=…</code> 自动带入选中文字。
+      用法：粘一句难懂的话 → 先看<b>「你可能卡在哪里」</b> → 再看<b>这句话真正想说的</b>。
+      基础模式用内置词库离线拆解；AI 模式（填自己的 DeepSeek 密钥或后端代理）做整句认知诊断。划词入口由浏览器插件 / macOS 快速操作提供（安装包见仓库），本页支持 URL 参数 <code>?text=…</code> 自动带入。
     </p>
 
     <section class="ct-card" aria-label="输入要翻译的话">
@@ -195,6 +218,10 @@
   </main>
 
   <div class="ct-foot">核心逻辑：<b>先诊断你卡在哪 → 再针对卡点解释 → 没懂就换个方式追问</b>。基础模式离线、只做术语拆解；AI 模式由你自己配置的模型服务商完成整句翻译。本页不收集任何输入内容。</div>
+  <details class="ct-stats" id="ct4-stats">
+    <summary>本地使用数据（仅存本机 · 供产品迭代分析）</summary>
+    <div class="ct-statsbody" id="ct4-statsbody">正在计算…</div>
+  </details>
 </div>
 
 <script>
@@ -222,7 +249,7 @@
   function aiBase(){var c=loadAI();return c&&c.base?String(c.base).replace(/\/+$/,""):"https://api.deepseek.com"}
   function aiModel(){var c=loadAI();return c&&c.model?c.model:"deepseek-chat"}
   function waitText(t){waiting.innerHTML='<span class="ct-spin"></span>'+esc(t)}
-  var AI_SYS="你是「认知翻译」。任务：先判断用户可能卡在哪些概念上，再用大白话把整句话讲清。严格只输出 JSON（不要输出其他任何文字）：{\"summary\":\"这句话真正想说的是什么(1-2句,口语直白)\",\"alt\":\"更口语的第二版summary\",\"example\":\"一个生活化的例子\",\"why\":[\"为什么这么说/为什么重要(2-3条)\"],\"next\":[\"下一步可以关注什么(2-3条,只讲该看什么,不做投资决策)\"],\"terms\":[{\"term\":\"原文中可能卡住用户的词\",\"plain\":\"该词的人话解释(60字内)\"}],\"caveat\":\"一句提醒(如:这是通俗简化,实际情况还受…影响;没有就写空字符串)\"}。terms 只列原文真实出现、且普通人可能不懂的词，最多3个；next 不得包含买卖建议；caveat 不要省略。";
+  var AI_SYS="你是「认知翻译」。分两步：第一步做“认知卡点诊断”，第二步把整句话讲成人话。卡点不是罗列术语，而是指出用户真正没想通的问题（例如“降息为什么会影响资产价格？”，而不是只写“降息”这个词）。严格只输出 JSON（不要输出任何其他文字）：{\"stuck_points\":[{\"point\":\"卡点1：一个真正会卡住人的问题\"}],\"summary\":\"这句话真正想说的是什么(1-2句,口语直白)\",\"alt\":\"更口语的第二版summary\",\"example\":\"一个生活化的例子\",\"why\":[\"为什么这么说(2-3条)\"],\"next\":[\"下一步可以关注什么(2-3条,只讲该看什么,不做投资决策)\"],\"terms\":[{\"term\":\"原文中确实出现的难词\",\"plain\":\"该词的人话解释(60字内)\"}],\"caveat\":\"一句提醒(通俗简化,实际还受…影响;没有就写空字符串)\"}。stuck_points 必须给出1-3个、且必须是“问题”而不是名词；terms 最多3个、且必须是原文真实出现的词；next 不得包含买卖建议；caveat 不要省略。";
   var AI_VAR_SYS="你是「认知翻译」。用更口语、像朋友聊天的语气，把这句话总结重写一遍。严格只输出 JSON：{\"alt\":\"更口语的一句话总结(1-2句)\"}";
   var AI_FOLLOW_SYS={
     again:"你是「认知翻译」。用户还是没看懂。请换一个完全不同的、更生活化的例子重新解释（不要重复之前的说法）。严格只输出 JSON：{\"answer\":\"...\"}",
@@ -240,6 +267,7 @@
     out.why=Array.isArray(d.why)?d.why.map(String).filter(function(x){return x.trim()}).slice(0,3):[];
     out.next=Array.isArray(d.next)?d.next.map(String).filter(function(x){return x.trim()}).slice(0,3):[];
     out.terms=Array.isArray(d.terms)?d.terms.filter(function(t){return t&&typeof t.term==="string"&&t.term.trim()}).slice(0,3).map(function(t){return{term:String(t.term).trim().slice(0,40),plain:String(t.plain||"").trim().slice(0,200)}}):[];
+    out.stuck_points=Array.isArray(d.stuck_points)?d.stuck_points.filter(function(x){return x&&typeof x.point==="string"&&x.point.trim()}).slice(0,3).map(function(x){return{point:String(x.point).trim().slice(0,120)}}):[];
     return out;
   }
   function parseContent(c){
@@ -259,7 +287,7 @@
           return r.json();
         }).then(function(j){
           var c=(j&&j.content)||(j&&j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content);
-          return validateAI(parseContent(c));
+          return parseContent(c);
         });
     }
     return fetch(aiBase()+"/chat/completions",{method:"POST",
@@ -267,7 +295,7 @@
       body:JSON.stringify({model:aiModel(),messages:msgs,temperature:0.4,max_tokens:1600,response_format:{type:"json_object"}})
     }).then(function(r){if(!r.ok)throw new Error("AI 接口返回状态 "+r.status);return r.json()}).then(function(j){
       var c=j&&j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content;
-      return validateAI(parseContent(c));
+      return parseContent(c);
     });
   }
 
@@ -331,6 +359,7 @@
   /* ---------- 示例（教材） ---------- */
   var SAMPLES=[
     {id:"s1",t:"市盈率 348 倍，说明什么？",terms:["pe"],
+     points:["为什么 348 倍意味着“提前付钱”？","高倍数背后，市场在赌什么？","为什么高 PE 反而更脆弱？"],
      sum:"市场愿意为这家公司未来每 1 元利润，现在先付 348 元——它买的不是今天的公司，而是几年后可能变得很大的公司。",
      alt:"简单说：348 倍 = 你为它未来每赚 1 块，现在先掏 348 块。买的是它“以后会很牛”的故事；故事一破，跌得也快。",
      ex:"一家奶茶店一年净赚 1 万元，却有人愿意花 348 万元买下它。他赌的不是这 1 万元，而是这家店未来能开几百家。",
@@ -338,6 +367,7 @@
      next:["把它和同行业公司比较，再看未来 3 年利润增速能否撑起估值（可参考 PEG）。","判断是否合理，取决于增速与风险，而不是单看倍数高低。"],
      caveat:"这是通俗简化：市盈率高低还要结合行业属性、盈利质量与周期位置，不能单独作为买卖依据。"},
     {id:"s2",t:"为什么美国降息会影响中国股市？",terms:["降息","美联储"],
+     points:["降息为什么会影响资产价格？","“流动性宽松”和“降息”是什么关系？","为什么这里说“估值”而不是“利润”？"],
      sum:"美国降息会让美元资产的收益率吸引力下降，一部分全球资金可能去寻找别的市场，中国资产可能因此受到资金流动和估值变化的影响。",
      alt:"一句话：美国降息 = 存在美国的钱利息变少，一部分钱开始往外找机会，中国这类市场更容易被“水”漫到。",
      ex:"把全球资金想成一大池水：美国利率高时，水被抽去美国吃利息；一降息，一部分水就流向回报更高的地方。",
@@ -345,12 +375,14 @@
      next:["可以关注美联储议息时间表，以及外资（如北向资金）是否持续流入。","记住：资金流动只是众多因素之一，降息不等于市场一定上涨。"],
      caveat:"降息只是影响市场的众多因素之一；资金流向还受汇率、增长预期、风险偏好等影响，不是“降息必涨”。"},
     {id:"s3",t:"GPU 采用 Chiplet 架构来提升带宽。",terms:["chiplet","带宽"],
+     points:["为什么要把大芯片拆成小芯片？","“带宽”在这里指什么，为什么重要？","Chiplet 为什么能提升带宽？"],
      sum:"把原来一块难造的大芯片，拆成几块小芯片拼装起来；带宽就是数据通道的宽度，通道越宽，一次能搬的数据越多。",
      alt:"大白话：以前是一整块难造的大芯片，现在改成几块小芯片拼装；带宽就是数据管道有多宽，拼装让管道更好加宽。",
      ex:"一条大街太宽很难一次修好，就分成几段分别修、再拼起来；“带宽”等于这条路有几条车道。",
      why:["大芯片越大越难造（良率低、成本高），Chiplet 是绕开“造不出超大芯片”的务实解法。","AI 计算最怕的不是算得慢，而是数据喂不进去（内存墙），带宽决定喂数据的速度。"],
      next:["看到 Chiplet 就理解为“小芯片拼装”。","判断 AI 芯片强弱时，把算力和带宽（如 HBM 容量、互联带宽）放在一起看。"]},
     {id:"s4",t:"Transformer 架构是 GPT 这类大模型的基础。",terms:["transformer"],
+     points:["Transformer 到底做了什么“新”的事？","“注意力”在这里是什么意思？","为什么它让大模型成为可能？"],
      sum:"Transformer 是一套“边读边挑重点”的机制：模型读每个词时，都会计算它和上下文里其他词的关系强弱，再决定注意力放在哪。",
      alt:"打个比方：读一句话时给每个词和上下文“打分”，重点词多看一眼——Transformer 就是干这个的，GPT 全靠它。",
      ex:"就像你读长文不会逐字平均用力，而是自动给关键词打高亮——Transformer 就是让机器学会“哪里值得多看两眼”的高亮系统。",
@@ -358,6 +390,7 @@
      next:["把注意力想成“打分”：模型给相关词打高分，再按分数加权理解。","入门看大模型文章抓住 4 个词：Token、参数、上下文窗口、注意力。"],
      termsExtra:["token","上下文窗口","参数"]},
     {id:"s5",t:"这个项目的 ROI 有 15%，值得投吗？",terms:["roi"],
+     points:["ROI 15% 到底高不高？","ROI 没有告诉你什么？","为什么不能只看一个回报率？"],
      sum:"ROI = 投入产出比：投 100 元赚回 15 元。但它只告诉你赚多少，没告诉你多久赚到、有多稳。",
      alt:"别被 15% 唬住：先问多久赚到、会不会亏光。投 100 赚 15 只是一张成绩单，不是买入理由。",
      ex:"花 1000 元投广告，带来 1150 元利润，ROI 就是 15%。听起来不错，但要问：这是一个月的，还是一年的？",
@@ -365,18 +398,21 @@
      next:["先看三个要素：周期多长、最坏亏多少、凭什么能达到 15%。","把所有项目换算成“年化”再比较，别被单次回报率误导。"],
      caveat:"本文只解释指标含义，不构成投资建议。"},
     {id:"s6",t:"复利是世界的第八大奇迹？",terms:["复利"],
+     points:["复利和单利差在哪？","为什么说“时间”才是关键？","复利什么时候会变成陷阱？"],
      sum:"复利 = 利息也能再生利息。它不神奇，神奇的是时间：同样 10 万，年化 10%，30 年后约 174 万。",
      alt:"复利就是“利息也生利息”，滚久了很可怕；它的对手不是收益率，是你等不等得起。",
      ex:"滚雪球：雪球变大后，每滚一圈沾到的新雪也更多。复利最大的难题，是大多数人等不到第 20 圈。",
      why:["它揭示了“慢慢变富”的数学：收益率 × 时间 × 不中断。","反过来它也是陷阱：亏损也会复利——每年亏 20%，回本要涨 25%。"],
      next:["别追求暴利，先做到不中断：持续投入、别频繁折腾。","用 72 法则心算：72 ÷ 年化收益率 ≈ 本金翻倍的年数。"]},
     {id:"s7",t:"Token、上下文窗口、参数，分别是什么意思？",terms:["token","上下文窗口","参数"],
+     points:["Token 和“字/词”有什么不同？","上下文窗口决定你能做什么？","参数多就等于聪明吗？"],
      sum:"Token 是模型读文本的“积木块”；上下文窗口是它一次能看多长；参数体现模型规模，但参数多不等于一定更聪明。",
      alt:"Token=积木块，上下文窗口=一次能拼多长，参数=规模旋钮。看模型先看这三样。",
      ex:"把模型想成一个读书的人：Token 是他读到的每个字词，上下文窗口是他面前能摊开的书页数，参数是他的脑容量。",
      why:["看 AI 产品参数不再被术语唬住：这 3 个词能解释 80% 的“配置差异”。","上下文窗口决定你能不能把整份文档丢给它；参数大致对应规模，能力还看数据与训练。"],
      next:["记一个组合：“Token 是单位，窗口是长度，参数是规模”。","选模型时先问：我的输入有多长（窗口够不够）？预算按多少 Token 算？"]},
     {id:"s8",t:"PB 和 PE 有什么区别？",terms:["pb","pe"],
+     points:["PE 和 PB 分别在衡量公司的什么？","哪类公司更该看 PB、哪类更该看 PE？","两个指标都低，是不是一定便宜？"],
      sum:"PE 看“每年赚多少”，PB 看“家底净资产值多少”。成长型公司（消费、科技）更看 PE；资产型公司（银行、地产）更看 PB。",
      alt:"PE 问“几年回本”，PB 问“花几倍买它的家底”。成长公司看 PE，银行地产看 PB。",
      ex:"PE：一家店一年净赚 10 万、卖 100 万 → 10 年回本（PE=10）。PB：这家店账面资产值 50 万、卖 100 万 → 你花 2 倍价格买它的家底（PB=2）。",
@@ -384,18 +420,21 @@
      next:["银行、保险、地产：优先看 PB；消费、科技、成长：优先看 PE。","“便宜”要有理由：是错杀，还是基本面真在变差？"],
      caveat:"指标没有好坏，只有用对地方；任何单一指标都不足以支撑投资决策。"},
     {id:"s9",t:"为什么公司营收增长很快，利润反而下降？",terms:["毛利率"],
+     points:["营收涨了，利润为什么可能反而不涨？","“增长”和“赚钱”是不是一回事？","成本都涨在了哪些地方？"],
      sum:"收入变多不等于赚钱变多：可能是卖得越多成本涨得更快（毛利被压低），或为了增长多花了大量销售/管理费用。",
      alt:"赚的钱变多了，但花得更多——尤其卖东西的成本涨得比收入还快，或为了冲量拼命打广告、招人。",
      ex:"奶茶店营业额翻倍，但每杯都靠打折换来的，还新租了三家店、请了一批人，年底一算反而亏了。",
      why:["“增长快”和“更赚钱”是两件事：要看毛利和净利是否跟得上收入。","利润下降的常见原因：成本上升、降价促销、费用前置（扩张投入）。"],
      next:["对比收入增速与成本/费用增速，看毛利率、净利率的变化趋势。","问一句：现在的投入是在换未来的增长，还是商业模式本身不赚钱？"]},
     {id:"s10",t:"通过模型蒸馏降低推理成本。",terms:["蒸馏"],
+     points:["蒸馏和普通训练有什么不同？","为什么小模型能接近大模型？","蒸馏主要省的是哪部分成本？"],
      sum:"让一个“大老师”模型教一个“小学生”模型：小模型学会大模型的行为，用更小算力做到接近的效果，从而降低成本。",
      alt:"大模型当老师，小模型抄作业学到八九成——小模型跑得快又便宜。",
      ex:"资深师傅把自己的解题思路一条条教给学徒，学徒不必每次都比师傅强，遇到大多数题能搞定、收费还低。",
      why:["大模型效果好但推理贵、速度慢；蒸馏能把一部分能力装进小模型。","做 C 端产品时，蒸馏是降低每次调用成本的关键手段。"],
      next:["看到“蒸馏版模型”，就理解为“用小模型复刻大模型的一部分能力”。","评估时要看它在你的任务上到底差多少，而不只是看参数规模。"]},
     {id:"s11",t:"这个方案需要进一步提升组织协同效率。",terms:[],
+     points:["这句话到底在要求什么？","它为什么说得这么绕？","我应该怎么回应或追问？"],
      sum:"这是一句典型的“场面话”：它没有说要做什么，翻译过来是“大家配合得不够顺，事情推进得有点乱、有点慢”。",
      alt:"大白话：现在大家各干各的、对接不顺，活儿干得慢，得想个办法让配合更顺。",
      ex:"像十个人划一条船，桨划得不齐，船在原地打转——“提升协同效率”就是让大家一起喊口号、划得整齐。",
@@ -473,6 +512,15 @@
       (canVariant?'<div class="ct-herofoot"><button type="button" class="ct-vbtn" data-act="variant" id="ct4-vbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h16M4 15h16M10 3 8 21M16 3l-2 18"/></svg>换个说法</button><span class="ct-vtag" id="ct4-vtag">'+(useAlt&&alt?"当前：B 版（更口语）":"当前：A 版")+'</span></div>':"")+'</div>';
   }
   function caveatCard(txt){return txt?'<div class="ct-caveat"><b>一句提醒 ·</b> '+esc(txt)+'</div>':""}
+  function pointsPanel(points){
+    if(!points||!points.length)return "";
+    return '<div class="ct-points"><div class="ct-plbl">你可能卡在这里</div><ol>'+
+      points.map(function(x,i){var t=(typeof x==="string"?x:((x&&x.point)||""));return '<li data-n="'+(i+1)+'">'+esc(t)+'</li>'}).join("")+'</ol></div>';
+  }
+  function morePanel(why,example,next){
+    return '<details class="ct-more"><summary>为什么这么说 · 举个例子 · 下一步可以关注什么</summary><div class="ct-more-body"><div class="ct-cols">'+
+      block(1,"为什么这么说",'<ul>'+li(why)+'</ul>')+block(2,"一个生活化例子",'<p>'+esc(example)+'</p>')+block(3,"下一步可以关注什么",'<ul>'+li(next)+'</ul>')+'</div></div></details>';
+  }
   function feedbackHtml(){
     return '<div class="ct-feedback" role="group" aria-label="反馈"><span class="ct-fb-txt">对你有帮助吗？</span>'+
       '<div class="ct-stars">'+[1,2,3,4,5].map(function(n){return '<button type="button" class="ct-star" data-act="star" data-val="'+n+'" aria-label="'+n+' 星" aria-pressed="false">★</button>'}).join("")+'</div>'+
@@ -495,9 +543,10 @@
     html+=modeBadge("base");
     html+='<div class="ct-asked"><b>原文 · </b><span class="ct-q">'+hlHtml(s.t,list.map(function(x,i){return{lit:x.lit,keyIdx:i}}))+'</span></div>';
     if(regKeys.length){html+=chipRow(regKeys)+'<div class="ct-tips" id="ct4-tips"></div><div class="ct-hint" style="margin:-2px 0 10px">👆 黄色 = 你可能卡住的地方，点开即译</div>'}
+    html+=pointsPanel(s.points);
     html+=heroCard(s.sum,useAlt,s.alt,!!s.alt,"这句话真正想说的是");
     html+=caveatCard(s.caveat);
-    html+='<div class="ct-cols">'+block(1,"为什么这么说",'<ul>'+li(s.why)+'</ul>')+block(2,"一个生活化例子",'<p>'+esc(s.ex)+'</p>')+block(3,"下一步可以关注什么",'<ul>'+li(s.next)+'</ul>')+'</div>';
+    html+=morePanel(s.why,s.ex,s.next);
     html+=feedbackHtml();
     return html;
   }
@@ -527,9 +576,10 @@
     html+=modeBadge("ai");
     html+='<div class="ct-asked"><b>原文 · </b><span class="ct-q">'+hlHtml(text.slice(0,600),list.map(function(x,i){return{lit:x.lit,keyIdx:i}}))+(text.length>600?"…":"")+'</span></div>';
     if(regKeys.length){html+=chipRow(regKeys)+'<div class="ct-tips" id="ct4-tips"></div><div class="ct-hint" style="margin:-2px 0 10px">👆 AI 认为你可能卡在这些词上，点开即译</div>'}
+    html+=pointsPanel(data.stuck_points);
     html+=heroCard(data.summary,useAlt,data.alt,true,"这句话真正想说的是");
     html+=caveatCard(data.caveat);
-    html+='<div class="ct-cols">'+block(1,"为什么这么说",'<ul>'+li(data.why&&data.why.length?data.why:["（AI 未给出）"])+'</ul>')+block(2,"一个生活化例子",'<p>'+esc(data.example||"（换个角度：把它套到一件日常小事上，往往就通了。）")+'</p>')+block(3,"下一步可以关注什么",'<ul>'+li(data.next&&data.next.length?data.next:["（AI 未给出）"])+'</ul>')+'</div>';
+    html+=morePanel(data.why&&data.why.length?data.why:["（AI 未给出）"],data.example||"（换个角度：把它套到一件日常小事上，往往就通了。）",data.next&&data.next.length?data.next:["（AI 未给出）"]);
     html+=feedbackHtml();
     return html;
   }
@@ -538,12 +588,14 @@
   var cur={s:null,alt:false,ai:null,text:"",mode:""};
   function plainOf(s,useAlt){
     var t="【认知翻译 · 30 秒看懂】\n"+s.t+"\n\n这句话真正想说的是：\n"+(useAlt&&s.alt?s.alt:s.sum)+"\n\n为什么这么说：\n"+s.why.map(function(x){return "· "+x}).join("\n")+"\n\n一个例子：\n"+s.ex+"\n\n下一步可以关注什么：\n"+s.next.map(function(x){return "· "+x}).join("\n")+"\n";
+    if(s.points&&s.points.length)t+="\n你可能卡在这里：\n"+s.points.map(function(x,i){return (i+1)+". "+x}).join("\n")+"\n";
     if(s.caveat)t+="\n一句提醒："+s.caveat+"\n";
     return t;
   }
   function aiPlain(data,useAlt,text){
     var sum=String(useAlt&&data.alt?data.alt:(data.summary||"")).trim();
     return "【认知翻译 · 30 秒看懂】\n"+(text&&text.length<200?text+"\n\n":"")+"这句话真正想说的是：\n"+sum+
+      (Array.isArray(data.stuck_points)&&data.stuck_points.length?"\n\n你可能卡在这里：\n"+data.stuck_points.map(function(x,i){return (i+1)+". "+x.point}).join("\n")+"\n":"")+
       "\n\n为什么这么说：\n"+(Array.isArray(data.why)?data.why.map(function(x){return "· "+x}).join("\n"):"")+
       "\n\n一个例子：\n"+String(data.example||"")+
       "\n\n下一步可以关注什么：\n"+(Array.isArray(data.next)?data.next.map(function(x){return "· "+x}).join("\n"):"")+
@@ -583,9 +635,10 @@
       waitText("AI 正在把它翻译成大白话（约几秒）…");
       out.classList.remove("on");
       aiCall(text).then(function(d){
+        var v=validateAI(d);
         waiting.classList.remove("on");
-        cur={s:null,alt:false,ai:d,text:text,mode:"ai"};
-        show(renderAI(d,text,false));
+        cur={s:null,alt:false,ai:v,text:text,mode:"ai"};
+        show(renderAI(v,text,false));
       }).catch(function(err){
         waiting.classList.remove("on");
         toast("AI 调用失败："+(err&&err.message?err.message:"网络错误")+"，已改为基础模式（术语拆解）");
@@ -678,6 +731,19 @@
         var d2=document.getElementById("ct4-aicfg");if(d2){d2.open=true;d2.scrollIntoView({behavior:"smooth",block:"center"})}
       }
     }
+    else if(act==="export-fb"){
+      var arr=fbData()||[];
+      var json=JSON.stringify(arr,null,2);
+      function done(){el.textContent="已复制 ✓";setTimeout(function(){el.textContent="复制全部数据（JSON）"},1800)}
+      function fb(){var t=document.createElement("textarea");t.value=json;document.body.appendChild(t);t.select();try{document.execCommand("copy")}catch(err){}t.remove()}
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(json).then(done,function(){fb();done()})}
+      else{fb();done()}
+    }
+    else if(act==="clear-fb"){
+      try{var s2=mem();if(s2)s2.removeItem("ct_fb_v1")}catch(e){}
+      renderStats();
+      toast("已清空本地反馈记录");
+    }
     else if(act==="ai-save"||act==="ai-clear"||act==="ai-test"){
       var keyEl=document.getElementById("ct4-ai-key");
       var proxyEl=document.getElementById("ct4-ai-proxy");
@@ -728,6 +794,43 @@
     if(baseEl)baseEl.value=cfg.base||"";
     if(modelEl)modelEl.value=cfg.model||"";
     if(st){st.className="ct-aistatus ok";st.textContent="已启用 AI"+(cfg.proxy?"（后端代理）":("："+(cfg.model||"deepseek-chat")))+"。可直接翻译任意句子。"}
+  })();
+
+  /* ---------- 本地使用数据面板 ---------- */
+  function fbData(){var s=mem();if(!s)return null;try{return JSON.parse(s.getItem("ct_fb_v1")||"[]")}catch(e){return null}}
+  function fbKindName(k){
+    if(k==="rating")return"评分";
+    if(/again/.test(k))return"还是没懂";
+    if(/why$/.test(k))return"为什么";
+    if(/case$/.test(k))return"举例";
+    return "反馈";
+  }
+  function renderStats(){
+    var box=document.getElementById("ct4-statsbody");if(!box)return;
+    var arr=fbData();
+    if(!arr||!arr.length){box.innerHTML="还没有本地使用数据。翻译后点个星级、或按“还是没懂 / 为什么 / 举例”，记录就会出现在这里（只存本机）。";return}
+    var ratings=arr.filter(function(x){return x.kind==="rating"});
+    var avg=ratings.length?(ratings.reduce(function(a,b){return a+ (b.value||0)},0)/ratings.length).toFixed(1):"—";
+    var f=arr.filter(function(x){return x.kind&&x.kind.indexOf("follow")===0});
+    var total=f.length;
+    var pct=function(n){return total?Math.round(n/total*100)+"%":"—"};
+    var again=f.filter(function(x){return /again/.test(x.kind)}).length;
+    var why=f.filter(function(x){return /why$/.test(x.kind)}).length;
+    var cse=f.filter(function(x){return /case$/.test(x.kind)}).length;
+    var qlist=arr.slice(-8).reverse().map(function(x){
+      return '<div><b title="'+esc(x.query||"")+'">'+esc((x.query||"（空）").slice(0,30))+'</b><span>'+fbKindName(x.kind)+(x.kind==="rating"?" "+x.value+"★":"")+'</span></div>';
+    }).join("");
+    box.innerHTML='<div class="ct-statgrid">'+
+      '<div class="ct-statcell"><b>'+avg+'</b><span>平均评分（'+ratings.length+' 次）</span></div>'+
+      '<div class="ct-statcell"><b>'+pct(again)+'</b><span>“还是没懂”占比</span></div>'+
+      '<div class="ct-statcell"><b>'+pct(why)+'</b><span>“为什么”占比</span></div>'+
+      '<div class="ct-statcell"><b>'+pct(cse)+'</b><span>“举例”占比</span></div></div>'+
+      '<div class="ct-qlist"><div><b>最近记录</b><span>类型</span></div>'+qlist+'</div>'+
+      '<div class="ct-row" style="margin-top:10px"><button type="button" class="ct-btn" data-act="export-fb">复制全部数据（JSON）</button><button type="button" class="ct-btn ghost" data-act="clear-fb">清空本地记录</button></div>';
+  }
+  (function(){
+    var statsEl=document.getElementById("ct4-stats");
+    if(statsEl)statsEl.addEventListener("toggle",function(){if(statsEl.open)renderStats()});
   })();
 
   /* ---------- 划词模式：URL 参数 ---------- */
