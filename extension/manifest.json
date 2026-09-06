@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "认知翻译 · 划词即译",
+  "version": "1.0.0",
+  "description": "把难懂的话翻译成人话：在任意网页选中文字，右键选择「认知翻译」，打开公网翻译页得到 30 秒看懂版 + 例子 + 为什么重要 + 下一步。",
+  "permissions": ["contextMenus"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "认知翻译"
+  }
+}
