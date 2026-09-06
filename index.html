@@ -3,252 +3,311 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>认知翻译 · 把难懂的话翻译成人话</title>
+<title>认知翻译 · 先找到你卡在哪，再讲给你听</title>
 <style>html,body{margin:0;padding:0;background:#f6f5f1}@media (prefers-color-scheme:dark){html,body{background:#15141a}}</style>
 </head>
 <body>
-<section id="ct2-root" class="ct2" lang="zh-CN" aria-label="认知翻译 v2 演示：把难懂的话翻译成人话">
+<section id="ct4-root" class="ct4" lang="zh-CN" aria-label="认知翻译 v4：发现你卡在哪里，再用大白话讲清">
 <style>
-.ct2{
+.ct4{
   --bg:#f6f5f1; --surface:#ffffff; --surface2:#f2f0ea; --ink:#23201a; --muted:#7b7566;
   --line:rgba(50,45,32,.13); --acc:#3550cf; --acc2:#2b43b0; --onacc:#ffffff;
   --accSoft:rgba(53,80,207,.10); --gold:#a86a10; --goldSoft:rgba(183,121,31,.15);
-  --serif:"Songti SC","Noto Serif SC",STSong,"Iowan Old Style",Georgia,serif; --warn:#b4541c;
+  --warn:#b4541c; --warnSoft:rgba(180,84,28,.12);
+  --serif:"Songti SC","Noto Serif SC",STSong,"Iowan Old Style",Georgia,serif;
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){
-  .ct2{ --bg:#15141a; --surface:#211f28; --surface2:#2b2833; --ink:#ece9e1; --muted:#a09a8b;
+  .ct4{ --bg:#15141a; --surface:#211f28; --surface2:#2b2833; --ink:#ece9e1; --muted:#a09a8b;
     --line:rgba(236,233,225,.12); --acc:#8ea4ff; --acc2:#a7b7ff; --onacc:#13172b;
-    --accSoft:rgba(142,164,255,.16); --gold:#e0ae52; --goldSoft:rgba(224,174,82,.17); --warn:#f2a15e;
+    --accSoft:rgba(142,164,255,.16); --gold:#e0ae52; --goldSoft:rgba(224,174,82,.17);
+    --warn:#f2a15e; --warnSoft:rgba(242,161,94,.16);
     color-scheme:dark;
   }
 }
-.ct2 *{box-sizing:border-box;margin:0;padding:0}
-.ct2{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Segoe UI",Roboto,sans-serif;
-  font-size:15px;line-height:1.6;max-width:780px;margin:0 auto;padding:0 0 18px}
-.ct2 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
-.ct2 textarea{font:inherit;color:var(--ink)}
-.ct2 .ct-shell{background:var(--surface);min-height:100%}
-.ct2 .ct-top{position:sticky;top:0;z-index:20;background:linear-gradient(var(--surface) 80%,transparent);padding:14px 18px 8px}
-.ct2 .ct-brand{display:flex;align-items:center;gap:9px}
-.ct2 .ct-logo{width:32px;height:32px;border-radius:10px;background:var(--acc);color:var(--onacc);display:grid;place-items:center;flex:0 0 auto;font-weight:800;font-size:15px;box-shadow:0 6px 14px rgba(53,80,207,.22)}
-.ct2 .ct-name{font-weight:700;font-size:15px;letter-spacing:.3px}
-.ct2 .ct-name small{display:block;font-weight:400;font-size:10.5px;color:var(--muted);letter-spacing:1.4px}
-.ct2 .ct-tag{margin-left:auto;font-size:11px;color:var(--acc);background:var(--accSoft);padding:3px 10px;border-radius:99px;font-weight:600}
-.ct2 .ct-body{padding:6px 18px 18px}
-.ct2 .ct-hero{font-family:var(--serif);font-size:23px;font-weight:700;line-height:1.4;margin:14px 0 4px}
-.ct2 .ct-hero em{font-style:normal;color:var(--acc)}
-.ct2 .ct-sub{color:var(--muted);font-size:13.5px;max-width:600px}
-.ct2 .ct-card{border:1px solid var(--line);border-radius:18px;background:var(--surface);padding:16px;margin-top:16px}
-.ct2 .ct-card.soft{background:var(--surface2);border-style:dashed}
-.ct2 .ct-label{font-size:11px;letter-spacing:1.6px;color:var(--muted);font-weight:700;display:flex;align-items:center;gap:7px;margin-bottom:10px}
-.ct2 .ct-label::before{content:"";width:14px;height:2px;background:var(--acc);border-radius:2px}
-.ct2 textarea{width:100%;min-height:104px;border:1px solid var(--line);border-radius:13px;background:var(--surface2);padding:11px 13px;font-size:15px;outline:none;resize:vertical}
-.ct2 textarea:focus{border-color:var(--acc);box-shadow:0 0 0 3px var(--accSoft)}
-.ct2 .ct-row{display:flex;gap:8px;align-items:center;margin-top:11px;flex-wrap:wrap}
-.ct2 .ct-btn{display:inline-flex;align-items:center;gap:6px;justify-content:center;border:1px solid var(--line);background:var(--surface2);border-radius:11px;padding:9px 15px;font-size:13.5px;font-weight:600}
-.ct2 .ct-btn svg{width:15px;height:15px}
-.ct2 .ct-btn.primary{background:var(--acc);border-color:var(--acc);color:var(--onacc)}
-.ct2 .ct-btn.ghost{background:transparent;color:var(--muted)}
-.ct2 .ct-btn:disabled{opacity:.55;cursor:default}
-.ct2 .ct-hint{font-size:11.5px;color:var(--muted);margin-top:8px}
-.ct2 .ct-samples{margin-top:14px}
-.ct2 .ct-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px}
-.ct2 .ct-chip{font-size:12.5px;border:1px solid var(--line);background:var(--surface2);color:var(--ink);border-radius:99px;padding:5px 12px;line-height:1.3;text-align:left;max-width:100%}
-.ct2 .ct-chip:hover{border-color:var(--acc);color:var(--acc)}
-.ct2 .ct-chip.term{background:var(--goldSoft);border-color:color-mix(in srgb,var(--gold) 38%,transparent);color:var(--gold);font-weight:600}
-.ct2 .ct-waiting{display:none;align-items:center;gap:9px;color:var(--acc);font-size:13px;margin-top:10px}
-.ct2 .ct-waiting.on{display:flex}
-.ct2 .ct-spin{width:15px;height:15px;border-radius:50%;border:2px solid var(--accSoft);border-top-color:var(--acc);animation:ctSpin .8s linear infinite;flex:0 0 auto}
+.ct4 *{box-sizing:border-box;margin:0;padding:0}
+.ct4{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Segoe UI",Roboto,sans-serif;
+  font-size:15px;line-height:1.6;max-width:980px;margin:0 auto;padding:0 0 18px}
+.ct4 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.ct4 textarea,.ct4 input{font:inherit;color:var(--ink)}
+.ct4 .ct-shell{background:var(--surface);min-height:100%}
+.ct4 .ct-top{position:sticky;top:0;z-index:20;background:linear-gradient(var(--surface) 80%,transparent);padding:14px 18px 8px}
+.ct4 .ct-brand{display:flex;align-items:center;gap:9px}
+.ct4 .ct-logo{width:32px;height:32px;border-radius:10px;background:var(--acc);color:var(--onacc);display:grid;place-items:center;flex:0 0 auto;font-weight:800;font-size:15px;box-shadow:0 6px 14px rgba(53,80,207,.22)}
+.ct4 .ct-name{font-weight:700;font-size:15px;letter-spacing:.3px}
+.ct4 .ct-name small{display:block;font-weight:400;font-size:10.5px;color:var(--muted);letter-spacing:1.4px}
+.ct4 .ct-tag{margin-left:auto;font-size:11px;color:var(--acc);background:var(--accSoft);padding:3px 10px;border-radius:99px;font-weight:600}
+.ct4 .ct-body{padding:6px 18px 18px}
+.ct4 .ct-hero{font-family:var(--serif);font-size:23px;font-weight:700;line-height:1.4;margin:14px 0 4px}
+.ct4 .ct-hero em{font-style:normal;color:var(--acc)}
+.ct4 .ct-sub{color:var(--muted);font-size:13.5px;max-width:660px}
+.ct4 .ct-card{border:1px solid var(--line);border-radius:18px;background:var(--surface);padding:16px;margin-top:16px}
+.ct4 .ct-label{font-size:11px;letter-spacing:1.6px;color:var(--muted);font-weight:700;display:flex;align-items:center;gap:7px;margin-bottom:10px}
+.ct4 .ct-label::before{content:"";width:14px;height:2px;background:var(--acc);border-radius:2px}
+.ct4 textarea{width:100%;min-height:104px;border:1px solid var(--line);border-radius:13px;background:var(--surface2);padding:11px 13px;font-size:15px;outline:none;resize:vertical}
+.ct4 textarea:focus{border-color:var(--acc);box-shadow:0 0 0 3px var(--accSoft)}
+.ct4 .ct-row{display:flex;gap:8px;align-items:center;margin-top:11px;flex-wrap:wrap}
+.ct4 .ct-btn{display:inline-flex;align-items:center;gap:6px;justify-content:center;border:1px solid var(--line);background:var(--surface2);border-radius:11px;padding:9px 15px;font-size:13.5px;font-weight:600}
+.ct4 .ct-btn svg{width:15px;height:15px}
+.ct4 .ct-btn.primary{background:var(--acc);border-color:var(--acc);color:var(--onacc)}
+.ct4 .ct-btn.ghost{background:transparent;color:var(--muted)}
+.ct4 .ct-hint{font-size:11.5px;color:var(--muted);margin-top:8px}
+.ct4 .ct-samples{margin-top:14px}
+.ct4 .ct-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px}
+.ct4 .ct-chip{font-size:12.5px;border:1px solid var(--line);background:var(--surface2);color:var(--ink);border-radius:99px;padding:5px 12px;line-height:1.3;text-align:left;max-width:100%}
+.ct4 .ct-chip:hover{border-color:var(--acc);color:var(--acc)}
+.ct4 .ct-chip.term{background:var(--goldSoft);border-color:var(--goldSoft);border-color:color-mix(in srgb,var(--gold) 38%,transparent);color:var(--gold);font-weight:600}
+.ct4 .ct-waiting{display:none;align-items:center;gap:9px;color:var(--acc);font-size:13px;margin-top:10px}
+.ct4 .ct-waiting.on{display:flex}
+.ct4 .ct-spin{width:15px;height:15px;border-radius:50%;border:2px solid var(--accSoft);border-top-color:var(--acc);animation:ctSpin .8s linear infinite;flex:0 0 auto}
 @keyframes ctSpin{to{transform:rotate(360deg)}}
-.ct2 .ct-out{margin-top:20px;display:none}
-.ct2 .ct-out.on{display:block;animation:ctIn .35s ease}
+.ct4 .ct-out{margin-top:20px;display:none}
+.ct4 .ct-out.on{display:block;animation:ctIn .35s ease}
 @keyframes ctIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.ct2 .ct-asked{font-size:13px;color:var(--muted);margin-bottom:8px;line-height:1.9}
-.ct2 .ct-asked .ct-q{color:var(--ink);font-weight:600}
-.ct2 .ct-hl{display:inline;padding:0 3px;margin:0 1px;border-radius:6px;font:inherit;font-weight:700;color:var(--gold);
-  background:var(--goldSoft);border-bottom:1.5px dotted color-mix(in srgb,var(--gold) 55%,transparent)}
-.ct2 .ct-hl:hover{filter:brightness(1.08)}
-.ct2 .ct-tips{margin:2px 0 4px}
-.ct2 .ct-tip{display:none;border:1px solid color-mix(in srgb,var(--gold) 42%,transparent);background:var(--goldSoft);
+/* 模式徽章 */
+.ct4 .ct-mode{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.ct4 .ct-modebadge{font-size:11px;font-weight:700;letter-spacing:.6px;padding:3px 10px;border-radius:99px}
+.ct4 .ct-modebadge.base{color:var(--muted);background:var(--surface2);border:1px solid var(--line)}
+.ct4 .ct-modebadge.ai{color:var(--acc);background:var(--accSoft);border:1px solid var(--accSoft);border-color:color-mix(in srgb,var(--acc) 35%,transparent)}
+.ct4 .ct-asked{font-size:13px;color:var(--muted);margin-bottom:8px;line-height:1.9;grid-column:1/-1}
+.ct4 .ct-asked .ct-q{color:var(--ink);font-weight:600}
+.ct4 .ct-hl{display:inline;padding:0 3px;margin:0 1px;border-radius:6px;font:inherit;font-weight:700;color:var(--gold);
+  background:var(--goldSoft);border-bottom:1.5px dotted var(--goldSoft);border-bottom-color:color-mix(in srgb,var(--gold) 55%,transparent)}
+.ct4 .ct-hl:hover{filter:brightness(1.08)}
+.ct4 .ct-tips{margin:2px 0 6px;grid-column:1/-1}
+.ct4 .ct-tip{display:none;border:1px solid var(--goldSoft);border-color:color-mix(in srgb,var(--gold) 42%,transparent);background:var(--goldSoft);
   border-radius:12px;padding:10px 13px;margin-top:7px;font-size:13px}
-.ct2 .ct-tip.on{display:block;animation:ctIn .25s ease}
-.ct2 .ct-tip b{color:var(--gold);font-size:12.5px;letter-spacing:.3px}
-.ct2 .ct-tip p{color:var(--ink);opacity:.94;margin-top:3px}
-.ct2 .ct-tip .ct-tipex{color:var(--muted);font-size:12.5px;margin-top:5px;border-top:1px dashed color-mix(in srgb,var(--gold) 30%,transparent);padding-top:5px}
-.ct2 .ct-vrow{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:2px 0 12px}
-.ct2 .ct-vbtn{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--acc);
-  border:1px solid color-mix(in srgb,var(--acc) 35%,transparent);border-radius:99px;padding:4px 12px;background:var(--accSoft)}
-.ct2 .ct-vbtn svg{width:13px;height:13px}
-.ct2 .ct-vtag{font-size:11px;color:var(--muted)}
-.ct2 .ct-blk{border:1px solid var(--line);border-radius:14px;padding:13px 15px;margin-bottom:10px;background:var(--surface)}
-.ct2 .ct-blk h4{font-size:11px;letter-spacing:1.4px;color:var(--acc);font-weight:700;margin-bottom:6px;display:flex;gap:7px;align-items:center}
-.ct2 .ct-blk h4 .no{width:17px;height:17px;border-radius:50%;background:var(--acc);color:var(--onacc);display:inline-grid;place-items:center;font-size:10px;letter-spacing:0;flex:0 0 auto}
-.ct2 .ct-blk p{font-size:14.5px;line-height:1.75}
-.ct2 .ct-blk ul{list-style:none}
-.ct2 .ct-blk li{font-size:14px;line-height:1.7;padding-left:20px;position:relative;margin-bottom:5px}
-.ct2 .ct-blk li::before{content:"→";position:absolute;left:0;color:var(--acc);font-weight:700}
-.ct2 .ct-blk .ct-sum{font-family:var(--serif);font-size:15.5px;line-height:1.85;font-weight:600}
-.ct2 .ct-blk .ct-sum .ct-vmark{display:inline-block;font-family:-apple-system,"PingFang SC",sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;color:var(--gold);background:var(--goldSoft);border-radius:99px;padding:1px 8px;margin-right:8px;vertical-align:2px}
-.ct2 .ct-gold{background:var(--goldSoft);border:1px solid color-mix(in srgb,var(--gold) 30%,transparent);border-radius:13px;padding:11px 15px;font-family:var(--serif);font-size:13.5px;margin-bottom:10px;color:var(--ink)}
-.ct2 .ct-gold b{color:var(--gold)}
-.ct2 .ct-feedback{margin-top:6px;padding-top:14px;border-top:1px dashed var(--line);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.ct2 .ct-fb-txt{font-size:13px;color:var(--muted)}
-.ct2 .ct-stars{display:flex;gap:2px}
-.ct2 .ct-star{font-size:22px;color:color-mix(in srgb,var(--ink) 22%,transparent);transition:color .15s}
-.ct2 .ct-star.on{color:#f0b53a}
-.ct2 .ct-copy{margin-left:auto;font-size:12px;border:1px solid var(--line);border-radius:99px;padding:5px 13px;background:var(--surface2)}
-.ct2 .ct-copy.done{color:var(--acc);border-color:var(--acc)}
-.ct2 .ct-follow{display:none;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
-.ct2 .ct-follow.on{display:block}
-.ct2 .ct-follow .ct-fh{font-size:12.5px;color:var(--ink);font-weight:600;margin-bottom:8px}
-.ct2 .ct-note{margin-top:16px;background:var(--surface2);border:1px dashed var(--line);border-radius:13px;padding:10px 14px;font-size:11.5px;color:var(--muted);line-height:1.7}
-.ct2 .ct-note b{color:var(--acc)}
-.ct2 .ct-foot{padding:6px 18px 20px;text-align:center;font-size:11px;color:var(--muted);line-height:1.8}
-.ct2 .ct-foot b{color:var(--acc)}
-.ct2 details.ct-aicfg{margin-top:14px;border:1px dashed color-mix(in srgb,var(--acc) 45%,transparent);border-radius:13px;padding:0 13px}
-.ct2 details.ct-aicfg summary{cursor:pointer;list-style:none;padding:10px 2px;font-size:12.5px;font-weight:600;color:var(--acc);display:flex;align-items:center;gap:8px}
-.ct2 details.ct-aicfg summary::-webkit-details-marker{display:none}
-.ct2 details.ct-aicfg summary::before{content:"⚙";font-size:12px}
-.ct2 details.ct-aicfg[open] summary{border-bottom:1px dashed color-mix(in srgb,var(--acc) 30%,transparent)}
-.ct2 .ct-aibody{padding:11px 2px 13px;font-size:12.5px;color:var(--muted)}
-.ct2 .ct-aibody .ct-field{margin-bottom:9px}
-.ct2 .ct-aibody label{display:block;font-size:11px;color:var(--muted);margin-bottom:3px;font-weight:600}
-.ct2 .ct-aibody input{width:100%;border:1px solid var(--line);border-radius:9px;background:var(--surface2);color:var(--ink);padding:7px 10px;font-size:13px;outline:none}
-.ct2 .ct-aibody input:focus{border-color:var(--acc)}
-.ct2 .ct-airow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:2px}
-.ct2 .ct-aisave{font-size:12px;font-weight:600;color:var(--onacc);background:var(--acc);border-radius:9px;padding:6px 14px}
-.ct2 .ct-aiclear{font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:9px;padding:6px 12px;background:var(--surface2)}
-.ct2 .ct-aistatus{font-size:11.5px;margin-top:8px;line-height:1.6}
-.ct2 .ct-aistatus.ok{color:var(--acc)}
-.ct2 .ct-aistatus.bad{color:var(--warn,#b4541c)}
-@media (max-width:420px){.ct2 .ct-hero{font-size:20px}}
+.ct4 .ct-tip.on{display:block;animation:ctIn .25s ease}
+.ct4 .ct-tip b{color:var(--gold);font-size:12.5px;letter-spacing:.3px}
+.ct4 .ct-tip p{color:var(--ink);opacity:.94;margin-top:3px}
+.ct4 .ct-tip .ct-tipex{color:var(--muted);font-size:12.5px;margin-top:5px;border-top:1px dashed var(--goldSoft);border-top-color:color-mix(in srgb,var(--gold) 30%,transparent);padding-top:5px}
+/* 一级：这句话真正的意思 */
+.ct4 .ct-herocard{grid-column:1/-1;background:linear-gradient(160deg,var(--accSoft),transparent 70%);border:1px solid var(--line);border-radius:16px;padding:18px 18px 14px;margin-bottom:12px}
+.ct4 .ct-hlbl{font-size:11px;letter-spacing:2px;color:var(--acc);font-weight:800;margin-bottom:8px}
+.ct4 .ct-herotext{font-family:var(--serif);font-size:19px;line-height:1.9;font-weight:600}
+.ct4 .ct-herotext .ct-vmark{display:inline-block;font-family:-apple-system,"PingFang SC",sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;color:var(--gold);background:var(--goldSoft);border-radius:99px;padding:1px 8px;margin-right:8px;vertical-align:3px}
+.ct4 .ct-herofoot{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
+.ct4 .ct-vbtn{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--acc);
+  border:1px solid var(--accSoft);border-color:color-mix(in srgb,var(--acc) 35%,transparent);border-radius:99px;padding:4px 12px;background:var(--accSoft)}
+.ct4 .ct-vbtn svg{width:13px;height:13px}
+.ct4 .ct-vtag{font-size:11px;color:var(--muted)}
+.ct4 .ct-caveat{grid-column:1/-1;background:var(--warnSoft);border:1px solid var(--warnSoft);border-color:color-mix(in srgb,var(--warn) 30%,transparent);border-radius:12px;padding:9px 13px;font-size:12.5px;color:var(--ink);margin-bottom:12px}
+.ct4 .ct-caveat b{color:var(--warn)}
+/* 二/三级：为什么、例子、下一步 */
+.ct4 .ct-cols{display:grid;grid-template-columns:1fr;gap:10px;grid-column:1/-1}
+@media (min-width:640px){.ct4 .ct-cols{grid-template-columns:1fr 1fr 1fr}}
+.ct4 .ct-blk{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--surface)}
+.ct4 .ct-blk h4{font-size:11px;letter-spacing:1.3px;color:var(--acc);font-weight:700;margin-bottom:6px;display:flex;gap:7px;align-items:center}
+.ct4 .ct-blk h4 .no{width:17px;height:17px;border-radius:50%;background:var(--acc);color:var(--onacc);display:inline-grid;place-items:center;font-size:10px;letter-spacing:0;flex:0 0 auto}
+.ct4 .ct-blk p{font-size:13.5px;line-height:1.7}
+.ct4 .ct-blk ul{list-style:none}
+.ct4 .ct-blk li{font-size:13.5px;line-height:1.65;padding-left:18px;position:relative;margin-bottom:4px}
+.ct4 .ct-blk li::before{content:"→";position:absolute;left:0;color:var(--acc);font-weight:700}
+.ct4 .ct-notcover{grid-column:1/-1;border:1px dashed var(--line);border-radius:14px;padding:16px;background:var(--surface2);font-size:13.5px}
+.ct4 .ct-notcover .ct-chips{margin-top:10px}
+/* 反馈与追问 */
+.ct4 .ct-feedback{grid-column:1/-1;margin-top:8px;padding-top:12px;border-top:1px dashed var(--line);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.ct4 .ct-fb-txt{font-size:12.5px;color:var(--muted)}
+.ct4 .ct-stars{display:flex;gap:1px}
+.ct4 .ct-star{font-size:19px;color:color-mix(in srgb,var(--ink) 22%,transparent);transition:color .15s;padding:0 2px}
+.ct4 .ct-star.on{color:#f0b53a}
+.ct4 .ct-copy{margin-left:auto;font-size:12px;border:1px solid var(--line);border-radius:99px;padding:4px 12px;background:var(--surface2)}
+.ct4 .ct-copy.done{color:var(--acc);border-color:var(--acc)}
+.ct4 .ct-followrow{grid-column:1/-1;margin-top:10px;display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.ct4 .ct-followrow .ct-fh{font-size:12.5px;color:var(--muted)}
+.ct4 .ct-followstack{grid-column:1/-1}
+.ct4 .ct-followcard{border:1px solid var(--accSoft);border-color:color-mix(in srgb,var(--acc) 30%,transparent);background:var(--accSoft);border-radius:13px;padding:11px 14px;margin-top:9px;font-size:13.5px}
+.ct4 .ct-followcard .ct-fl{font-size:10.5px;letter-spacing:1.2px;color:var(--acc);font-weight:800;margin-bottom:4px}
+.ct4 details.ct-aicfg{margin-top:14px;border:1px dashed var(--accSoft);border-color:color-mix(in srgb,var(--acc) 45%,transparent);border-radius:13px;padding:0 13px}
+.ct4 details.ct-aicfg summary{cursor:pointer;list-style:none;padding:10px 2px;font-size:12.5px;font-weight:600;color:var(--acc);display:flex;align-items:center;gap:8px}
+.ct4 details.ct-aicfg summary::-webkit-details-marker{display:none}
+.ct4 details.ct-aicfg summary::before{content:"⚙";font-size:12px}
+.ct4 details.ct-aicfg[open] summary{border-bottom:1px dashed var(--accSoft);border-bottom-color:color-mix(in srgb,var(--acc) 30%,transparent)}
+.ct4 .ct-aibody{padding:11px 2px 13px;font-size:12.5px;color:var(--muted)}
+.ct4 .ct-aibody .ct-field{margin-bottom:9px}
+.ct4 .ct-aibody label{display:block;font-size:11px;color:var(--muted);margin-bottom:3px;font-weight:600}
+.ct4 .ct-aibody input{width:100%;border:1px solid var(--line);border-radius:9px;background:var(--surface2);color:var(--ink);padding:7px 10px;font-size:13px;outline:none}
+.ct4 .ct-aibody input:focus{border-color:var(--acc)}
+.ct4 .ct-airow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:2px}
+.ct4 .ct-aisave{font-size:12px;font-weight:600;color:var(--onacc);background:var(--acc);border-radius:9px;padding:6px 14px}
+.ct4 .ct-aiclear{font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:9px;padding:6px 12px;background:var(--surface2)}
+.ct4 .ct-aistatus{font-size:11.5px;margin-top:8px;line-height:1.6}
+.ct4 .ct-aistatus.ok{color:var(--acc)}
+.ct4 .ct-aistatus.bad{color:var(--warn)}
+.ct4 .ct-foot{padding:6px 18px 20px;text-align:center;font-size:11px;color:var(--muted);line-height:1.8}
+.ct4 .ct-foot b{color:var(--acc)}
+@media (max-width:420px){.ct4 .ct-hero{font-size:20px}.ct4 .ct-herotext{font-size:17px}}
 </style>
 
 <div class="ct-shell">
   <header class="ct-top">
     <div class="ct-brand">
       <span class="ct-logo" aria-hidden="true">译</span>
-      <span class="ct-name">认知翻译<small>WEB · 划词即译</small></span>
-      <span class="ct-tag">任意句子 AI 版</span>
+      <span class="ct-name">认知翻译<small>FIND YOUR STUCK POINT · THEN EXPLAIN</small></span>
+      <span class="ct-tag">划词即译</span>
     </div>
   </header>
 
   <main class="ct-body">
-    <h1 class="ct-hero">一句没看懂的话，<em>翻译成人话</em>。</h1>
-    <p class="ct-sub">把难懂的话翻译成人话：先找出<b>你真正卡住的词</b>，再给例子、为什么重要和下一步。<b>不配密钥</b>也能用内置词库；<b>填入你自己的 AI 密钥</b>后，任意句子都能翻。</p>
+    <h1 class="ct-hero">一句话没看懂？先找到你<em>卡在哪</em>，再讲给你听。</h1>
+    <p class="ct-sub">
+      两种模式：<b>基础模式</b>用内置词库拆出你卡住的词（离线可用）；<b>AI 模式</b>整句翻译成人话，并说明“这是简化理解，实际还受什么影响”。
+      划词入口通过浏览器插件 / macOS 快速操作实现（安装包见仓库），本页支持 URL 参数 <code>?text=…</code> 自动带入选中文字。
+    </p>
 
     <section class="ct-card" aria-label="输入要翻译的话">
       <div class="ct-label">把看不懂的话粘到这里</div>
-      <textarea id="ct2-in" placeholder="例如：美国降息为什么会影响中国股市？&#10;&#10;（浏览器插件版：选中任意网页文字，插件会自动带入这里）"></textarea>
+      <textarea id="ct4-in" placeholder="例如：为什么营收增长很快，利润反而下降？&#10;&#10;（浏览器插件版：选中任意网页文字，插件会自动带入这里）"></textarea>
       <div class="ct-row">
         <button type="button" class="ct-btn primary" data-act="go">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M13 5l7 7-7 7"/></svg>翻译成人话</button>
         <button type="button" class="ct-btn ghost" data-act="clear">清空</button>
       </div>
-      <div class="ct-waiting" id="ct2-waiting" role="status"><span class="ct-spin"></span>正在找出你最容易卡住的地方…</div>
-      <details class="ct-aicfg">
-        <summary>AI 设置（可选）：填入你自己的 DeepSeek 密钥，就能翻译任意句子</summary>
+      <div class="ct-waiting" id="ct4-waiting" role="status"><span class="ct-spin"></span>正在找出你最容易卡住的地方…</div>
+      <details class="ct-aicfg" id="ct4-aicfg">
+        <summary>AI 设置（可选）：整句翻译任意内容</summary>
         <div class="ct-aibody">
-          <div class="ct-field"><label for="ct2-ai-key">DeepSeek API Key（在 platform.deepseek.com 创建，密钥只保存在你本机浏览器）</label>
-            <input id="ct2-ai-key" type="password" placeholder="sk-…" autocomplete="off"></div>
-          <div class="ct-field"><label for="ct2-ai-base">API 地址（一般不用改）</label>
-            <input id="ct2-ai-base" type="text" placeholder="https://api.deepseek.com"></div>
-          <div class="ct-field"><label for="ct2-ai-model">模型</label>
-            <input id="ct2-ai-model" type="text" placeholder="deepseek-chat"></div>
+          <div class="ct-field"><label for="ct4-ai-key">DeepSeek API Key（platform.deepseek.com 创建；只保存在你自己的浏览器）</label>
+            <input id="ct4-ai-key" type="password" placeholder="sk-…" autocomplete="off"></div>
+          <div class="ct-field"><label for="ct4-ai-proxy">自有后端代理（可选）：留空则浏览器直连；正式上线建议填写你自己的 /api/translate，密钥放服务端</label>
+            <input id="ct4-ai-proxy" type="text" placeholder="https://你的域名/api/translate"></div>
+          <div class="ct-field"><label for="ct4-ai-base">API 地址（直连时用，一般不用改）</label>
+            <input id="ct4-ai-base" type="text" placeholder="https://api.deepseek.com"></div>
+          <div class="ct-field"><label for="ct4-ai-model">模型</label>
+            <input id="ct4-ai-model" type="text" placeholder="deepseek-chat"></div>
           <div class="ct-airow">
             <button type="button" class="ct-aisave" data-act="ai-save">保存并启用</button>
-            <button type="button" class="ct-aiclear" data-act="ai-clear">清除密钥</button>
+            <button type="button" class="ct-aiclear" data-act="ai-clear">清除</button>
             <button type="button" class="ct-aiclear" data-act="ai-test">测试连接</button>
           </div>
-          <div class="ct-aistatus" id="ct2-aistatus" role="status"></div>
+          <div class="ct-aistatus" id="ct4-aistatus" role="status"></div>
+          <div class="ct-aibody" style="margin-top:6px">⚠ 浏览器直连属于<b>原型方案</b>：密钥存在前端，页面若被注入脚本可能泄露。正式上线请用上面“自有后端代理”（仓库提供零依赖的 server/server.mjs 模板，密钥放服务端环境变量）。</div>
         </div>
       </details>
     </section>
 
     <section class="ct-samples" aria-label="示例">
-      <div class="ct-hint">先点一句试试（内置深度翻译；句子里<b>黄色的词</b>都可以点开看解释）：</div>
-      <div class="ct-chips" id="ct2-samples"></div>
+      <div class="ct-hint">先点一句试试（句子里<b>黄色的词</b>都可以点开看解释）：</div>
+      <div class="ct-chips" id="ct4-samples"></div>
     </section>
 
-    <section class="ct-out" id="ct2-out" aria-live="polite"></section>
+    <section class="ct-out" id="ct4-out" aria-live="polite"></section>
   </main>
 
-  <div class="ct-foot">可用内置词库离线翻译，也可在 <b>“AI 设置”</b>里填入你自己的 DeepSeek 密钥后翻译任意句子。隐私：你选中的文字会直接发送给你填写的模型服务商用于翻译；密钥只保存在你自己的浏览器里，本站不收集任何内容。</div>
+  <div class="ct-foot">核心逻辑：<b>先诊断你卡在哪 → 再针对卡点解释 → 没懂就换个方式追问</b>。基础模式离线、只做术语拆解；AI 模式由你自己配置的模型服务商完成整句翻译。本页不收集任何输入内容。</div>
 </div>
 
 <script>
 (function(){
   "use strict";
-  var ROOT=document.getElementById("ct2-root");
+  var ROOT=document.getElementById("ct4-root");
   if(!ROOT)return;
-  var out=document.getElementById("ct2-out");
-  var ta=document.getElementById("ct2-in");
-  var waiting=document.getElementById("ct2-waiting");
+  var out=document.getElementById("ct4-out");
+  var ta=document.getElementById("ct4-in");
+  var waiting=document.getElementById("ct4-waiting");
 
   function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
   function li(a){return a.map(function(x){return "<li>"+esc(x)+"</li>"}).join("")}
 
-  /* ---------- AI（可选）：DeepSeek 直连，密钥只保存在本机浏览器 ---------- */
-  var aiTips={},aiTipSeq=0;
+  /* ---------- 本地存储 ---------- */
   function mem(){try{return window.localStorage||null}catch(e){return null}}
-  function loadAI(){try{var s=mem();if(!s)return null;var v=s.getItem("ct_ai_v1");return v?JSON.parse(v):null}catch(e){return null}}
-  function persistAI(cfg){try{var s=mem();if(!s)return false;s.setItem("ct_ai_v1",JSON.stringify(cfg));return true}catch(e){return false}}
-  function wipeAI(){try{var s=mem();if(s)s.removeItem("ct_ai_v1")}catch(e){}}
+  function loadAI(){try{var s=mem();if(!s)return null;var v=s.getItem("ct_ai_v2");return v?JSON.parse(v):null}catch(e){return null}}
+  function persistAI(cfg){try{var s=mem();if(!s)return false;s.setItem("ct_ai_v2",JSON.stringify(cfg));return true}catch(e){return false}}
+  function wipeAI(){try{var s=mem();if(s)s.removeItem("ct_ai_v2")}catch(e){}}
+  function logFeedback(entry){try{var s=mem();if(!s)return;var arr=[];try{arr=JSON.parse(s.getItem("ct_fb_v1")||"[]")}catch(e){}
+    arr.push(Object.assign({ts:Date.now()},entry));if(arr.length>500)arr=arr.slice(-500);s.setItem("ct_fb_v1",JSON.stringify(arr))}catch(e){}}
+
+  /* ---------- AI ---------- */
+  var aiTips={},aiTipSeq=0;
   function aiBase(){var c=loadAI();return c&&c.base?String(c.base).replace(/\/+$/,""):"https://api.deepseek.com"}
   function aiModel(){var c=loadAI();return c&&c.model?c.model:"deepseek-chat"}
   function waitText(t){waiting.innerHTML='<span class="ct-spin"></span>'+esc(t)}
-  var AI_SYS="你是「认知翻译」。把用户给的难懂内容翻译成普通人看得懂的中文。严格只输出 JSON（不要输出任何其他文字），格式：{\"summary\":\"一句话总结(30秒看懂,直白口语)\",\"alt\":\"更口语的第二版总结\",\"example\":\"生活中的例子或比喻\",\"why\":[\"为什么重要(2-3条,每条一句话)\"],\"next\":[\"下一步建议(2-3条,可执行)\"],\"terms\":[{\"term\":\"原文中可能卡住读者的词\",\"plain\":\"该词的人话解释(60字内)\"}]}。terms 只列原文真实出现的难词，没有就不列。";
-  var AI_VAR_SYS="你是「认知翻译」。用更口语、像朋友聊天的方式，把下面内容的一句话总结重写一遍。严格只输出 JSON：{\"alt\":\"更口语的一句话总结(1-2句)\"}";
+  var AI_SYS="你是「认知翻译」。任务：先判断用户可能卡在哪些概念上，再用大白话把整句话讲清。严格只输出 JSON（不要输出其他任何文字）：{\"summary\":\"这句话真正想说的是什么(1-2句,口语直白)\",\"alt\":\"更口语的第二版summary\",\"example\":\"一个生活化的例子\",\"why\":[\"为什么这么说/为什么重要(2-3条)\"],\"next\":[\"下一步可以关注什么(2-3条,只讲该看什么,不做投资决策)\"],\"terms\":[{\"term\":\"原文中可能卡住用户的词\",\"plain\":\"该词的人话解释(60字内)\"}],\"caveat\":\"一句提醒(如:这是通俗简化,实际情况还受…影响;没有就写空字符串)\"}。terms 只列原文真实出现、且普通人可能不懂的词，最多3个；next 不得包含买卖建议；caveat 不要省略。";
+  var AI_VAR_SYS="你是「认知翻译」。用更口语、像朋友聊天的语气，把这句话总结重写一遍。严格只输出 JSON：{\"alt\":\"更口语的一句话总结(1-2句)\"}";
+  var AI_FOLLOW_SYS={
+    again:"你是「认知翻译」。用户还是没看懂。请换一个完全不同的、更生活化的例子重新解释（不要重复之前的说法）。严格只输出 JSON：{\"answer\":\"...\"}",
+    why:"你是「认知翻译」。请往上一层讲清这背后为什么成立/为什么重要，用大白话分点。严格只输出 JSON：{\"answer\":\"...\"}",
+    case:"你是「认知翻译」。请给一个真实世界里的具体案例，帮助理解下面内容。严格只输出 JSON：{\"answer\":\"...\"}"
+  };
+  function validateAI(d){
+    if(!d||typeof d!=="object")throw new Error("AI 返回格式不对");
+    var out={};
+    out.summary=typeof d.summary==="string"?d.summary.trim():"";
+    if(!out.summary)throw new Error("AI 返回缺少 summary");
+    out.alt=typeof d.alt==="string"?d.alt.trim():"";
+    out.example=typeof d.example==="string"?d.example.trim():"";
+    out.caveat=typeof d.caveat==="string"?d.caveat.trim():"";
+    out.why=Array.isArray(d.why)?d.why.map(String).filter(function(x){return x.trim()}).slice(0,3):[];
+    out.next=Array.isArray(d.next)?d.next.map(String).filter(function(x){return x.trim()}).slice(0,3):[];
+    out.terms=Array.isArray(d.terms)?d.terms.filter(function(t){return t&&typeof t.term==="string"&&t.term.trim()}).slice(0,3).map(function(t){return{term:String(t.term).trim().slice(0,40),plain:String(t.plain||"").trim().slice(0,200)}}):[];
+    return out;
+  }
+  function parseContent(c){
+    if(!c)throw new Error("AI 没有返回内容");
+    var a=c.indexOf("{");var b=c.lastIndexOf("}");
+    if(a<0||b<=a)throw new Error("AI 返回格式不对");
+    return JSON.parse(c.slice(a,b+1));
+  }
   function aiCall(text,extra,sys){
-    var cfg=loadAI();if(!cfg||!cfg.key)return Promise.reject(new Error("尚未配置 AI 密钥"));
+    var cfg=loadAI();
+    if(!cfg||(!cfg.key&&!cfg.proxy))return Promise.reject(new Error("尚未配置 AI"));
     var msgs=[{role:"system",content:sys||AI_SYS},{role:"user",content:((extra||"")+"\n需要翻译的内容：\n"+String(text).slice(0,6000))}];
+    if(cfg.proxy){
+      return fetch(String(cfg.proxy).replace(/\/+$/,""),{method:"POST",headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({messages:msgs})}).then(function(r){
+          if(!r.ok)throw new Error("代理返回状态 "+r.status);
+          return r.json();
+        }).then(function(j){
+          var c=(j&&j.content)||(j&&j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content);
+          return validateAI(parseContent(c));
+        });
+    }
     return fetch(aiBase()+"/chat/completions",{method:"POST",
       headers:{"Content-Type":"application/json","Authorization":"Bearer "+cfg.key},
       body:JSON.stringify({model:aiModel(),messages:msgs,temperature:0.4,max_tokens:1600,response_format:{type:"json_object"}})
     }).then(function(r){if(!r.ok)throw new Error("AI 接口返回状态 "+r.status);return r.json()}).then(function(j){
       var c=j&&j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content;
-      if(!c)throw new Error("AI 没有返回内容");
-      var a=c.indexOf("{");var b=c.lastIndexOf("}");
-      if(a<0||b<=a)throw new Error("AI 返回格式不对");
-      return JSON.parse(c.slice(a,b+1));
+      return validateAI(parseContent(c));
     });
   }
 
-  /* ---------- 词库：先找出最卡人的词 ---------- */
+  /* ---------- 词库（已校正表述） ---------- */
   var TERMS={
     "pe":{k:"PE · 市盈率",short:"股价 ÷ 它一年赚的钱 = 买它要提前付几年的利润。",
       ex:"奶茶店一年净赚 1 万，花 348 万买 = 348 倍：你买的是它未来开很多家店的故事。"},
     "pb":{k:"PB · 市净率",short:"股价 ÷ 每股净资产 = 你花几倍价格买它的“家底”。银行、地产这类资产型公司更常看它。"},
-    "降息":{k:"降息",short:"央行下调借钱利率 → 存钱利息变少、借钱变便宜 → 钱不愿躺着，开始找能赚钱的地方。",
-      ex:"像水库放水：利率是闸门，一降息，水（资金）就往外流。"},
-    "美联储":{k:"美联储",short:"美国的中央银行，管美国的利率和美元供应；它一降息，全球资金都会跟着搬家。"},
-    "chiplet":{k:"Chiplet · 小芯片拼装",short:"把一块很难造的大芯片拆成几块小芯片拼起来——又好造、又灵活。",
+    "降息":{k:"降息",short:"央行下调基准利率 → 存钱利息变少、借钱变便宜 → 资金更愿意流向风险资产。",
+      ex:"像水库放水：利率是闸门，一降息，水（资金）就更容易往外流。"},
+    "美联储":{k:"美联储",short:"美国的中央银行，负责制定美元利率等货币政策；它的决定会牵动全球资金流向。"},
+    "chiplet":{k:"Chiplet · 小芯片拼装",short:"把一块很难造的大芯片拆成几块小芯片拼起来——更好造、更灵活。",
       ex:"像大船难一次造好，就分成几个舱室分别造，再拼成一条大船。"},
     "带宽":{k:"带宽",short:"数据搬运的“路有多宽”：路越宽，一次能搬的数据越多，越不容易堵车。"},
     "transformer":{k:"Transformer · 变换器架构",short:"大模型的底层机制：读每个词时，先算出它和上下文里哪些词关系最强，再把“注意力”放在那里。",
       ex:"像读文章时自动给关键词打高亮——让机器学会哪里值得多看两眼。"},
     "token":{k:"Token · 词元",short:"模型读文本的最小单位（可以是一个字、一个词或一小段）；模型按 Token 数计费与理解。"},
     "上下文窗口":{k:"上下文窗口",short:"模型一次对话最多能“记住/看到”多长内容；窗口越大，越能处理长文、长对话。"},
-    "参数":{k:"参数",short:"模型内部成千上万个可调“旋钮”，决定容量与能力；参数多 ≠ 一定聪明，还要看数据和训练。"},
+    "参数":{k:"参数",short:"模型内部大量可调“旋钮”，体现模型规模；参数多 ≠ 一定更聪明，能力还取决于数据、训练方式和具体任务。"},
     "prompt":{k:"Prompt · 提示词",short:"你发给 AI 的指令/问题；提示词写得好不好，直接决定回答质量。"},
     "roi":{k:"ROI · 投入产出比",short:"赚到的钱 ÷ 投进去的钱。投 100 赚 15 = ROI 15%。"},
     "复利":{k:"复利",short:"利息也能再生利息；时间越长，雪球滚得越快。",
       ex:"10 万按年化 10% 滚 30 年 ≈ 174 万；关键是别中断。"},
     "ebitda":{k:"EBITDA",short:"公司“主营生意到底赚不赚钱”的近似值：扣除利息、税、折旧前的利润，用来横向比较同行。"},
     "护城河":{k:"护城河",short:"别人很难抢走你生意的优势：品牌、成本、网络效应、转换成本……"},
-    "现金流":{k:"现金流",short:"公司实际进进出出的钱。利润能造假，现金流更难造假。"},
+    "现金流":{k:"现金流",short:"公司实际进进出出的钱。会计利润可能通过会计处理被美化；现金流相对更实在，但同样可能受应收应付、交易安排等影响，需要结合业务判断。"},
     "通胀":{k:"通胀",short:"钱变毛：同样 100 元能买的东西变少。温和通胀正常，恶性通胀是灾难。"},
     "毛利率":{k:"毛利率",short:"卖 100 元的东西，扣掉直接成本后剩下多少。剩得越多，生意越“厚”。"},
     "贴现率":{k:"贴现率",short:"把“未来的钱”换算成“今天值多少”的折扣率；利率越高，未来利润越不值钱，所以加息会压估值。"},
     "估值":{k:"估值",short:"市场给一家公司贴的“价签”（常用 PE/PB 衡量）；贵不贵，永远要结合增速和风险看。"},
     "财报":{k:"财报",short:"公司定期公布的“体检报告”（赚多少、家底多少、现金多少）；看公司先看它。"},
-    "量化宽松":{k:"量化宽松（QE）",short:"央行直接印钱买资产、往市场灌流动性；一般利好股市和资产价格。"},
+    "量化宽松":{k:"量化宽松（QE）",short:"央行通过购买国债等资产扩大资产负债表、向金融体系注入流动性，通常发生在利率已经很低的时候。"},
     "汇率":{k:"汇率",short:"两种货币的兑换价；影响出口、外资流向，以及你手里钱的实际购买力。"},
     "幻觉":{k:"AI 幻觉",short:"模型一本正经地编造不存在的事实；重要信息务必交叉验证。"},
     "agent":{k:"Agent · 智能体",short:"能自己规划步骤、调用工具完成任务的大模型应用，而不是你问一句它答一句。"},
     "rag":{k:"RAG · 检索增强",short:"让模型先查资料再回答，减少瞎编；企业问答常用。"},
-    "微调":{k:"微调",short:"用领域数据把模型再训练一下，让它更懂你的业务（成本较高，起步阶段可先不做）。"}
+    "微调":{k:"微调",short:"用领域数据把模型再训练一下，让它更懂你的业务（成本较高，起步阶段可先不做）。"},
+    "蒸馏":{k:"模型蒸馏",short:"让一个“大老师”模型教一个“小学生”模型：小模型学会大模型的行为，用更小算力做到接近的效果。"},
+    "资本充足率":{k:"资本充足率",short:"银行自有资本占风险加权资产的比率，相当于银行能扛多大损失的“安全垫”；监管要求它不能太低。"},
+    "roe":{k:"ROE · 净资产收益率",short:"公司用股东的钱一年赚回多少：净利润 ÷ 净资产。衡量“帮股东赚钱的效率”。"}
   };
   var TERM_RULES=[
     {key:"pe",re:/(市盈率|\bPE\b)/i},{key:"pb",re:/(市净率|\bPB\b)/i},
@@ -257,210 +316,239 @@
     {key:"transformer",re:/\bTransformer\b/i},{key:"token",re:/\btokens?\b|词元/i},
     {key:"上下文窗口",re:/上下文窗口|上下文长度/},{key:"参数",re:/参数/},
     {key:"prompt",re:/\bPrompt\b|提示词/i},
-    {key:"roi",re:/\bROI\b|投入产出比/i},{key:"复利",re:/复利/},{key:"ebitda",re:/\bEBITDA\b/i},
+    {key:"roi",re:/\bROI\b|投入产出比/i},{key:"roe",re:/\bROE\b|净资产收益率/},
+    {key:"复利",re:/复利/},{key:"ebitda",re:/\bEBITDA\b/i},
     {key:"护城河",re:/护城河/},{key:"现金流",re:/现金流/},{key:"通胀",re:/通胀/},{key:"毛利率",re:/毛利率/},
     {key:"贴现率",re:/贴现率/},{key:"估值",re:/估值/},{key:"财报",re:/财报/},
     {key:"量化宽松",re:/量化宽松|\bQE\b/i},{key:"汇率",re:/汇率/},{key:"幻觉",re:/幻觉/},
-    {key:"agent",re:/\bAgent\b|智能体/i},{key:"rag",re:/\bRAG\b|检索增强/i},{key:"微调",re:/微调/}
+    {key:"agent",re:/\bAgent\b|智能体/i},{key:"rag",re:/\bRAG\b|检索增强/i},{key:"微调",re:/微调/},
+    {key:"蒸馏",re:/蒸馏/},{key:"资本充足率",re:/资本充足率/}
   ];
   function detect(text){var found=[];for(var i=0;i<TERM_RULES.length;i++){if(TERM_RULES[i].re.test(text))found.push(TERM_RULES[i].key)}return found}
   function termKey(name){for(var i=0;i<TERM_RULES.length;i++){if(TERM_RULES[i].key===name)return TERM_RULES[i]}return null}
-  function findTermsIn(text,keys){var ok=[],miss=[];for(var i=0;i<keys.length;i++){var r=termKey(keys[i]);if(r&&r.re.test(text))ok.push(keys[i]);else miss.push(keys[i])}return{ok:ok,miss:miss}}
+  function litOf(text,key){var r=termKey(key);if(!r)return null;var m=String(text).match(new RegExp(r.re.source,r.re.flags));return m?m[0]:null}
 
-  /* ---------- 内置深度翻译示例 ---------- */
+  /* ---------- 示例（教材） ---------- */
   var SAMPLES=[
     {id:"s1",t:"市盈率 348 倍，说明什么？",terms:["pe"],
-     sum:"意思是：市场愿意为这家公司未来每 1 元利润，现在先付 348 元——它买的不是今天的公司，而是几年后可能变得很大的公司。",
-     alt:"简单说：348 倍市盈率 = 你为它未来每赚 1 块，现在先掏 348 块。买的是它“以后会很牛”的故事；故事一破，跌得也快。",
-     ex:"想象一家奶茶店一年净赚 1 万元，却有人愿意花 348 万元买下它。他赌的不是这 1 万元，而是这家店未来能开几百家、每年赚几百万。",
-     why:["高 PE = 高预期：大家已经相信它会爆发式成长。","高预期也 = 高脆弱：只要一次业绩不及预期，跌起来会比普通公司更狠。"],
-     next:["别只看一个数：把它和同行业公司比才有意义。","看未来 3 年利润增速能不能“跑赢估值”（粗略用 PEG：PE ÷ 利润增速）。","如果增速撑不起 348 倍，你买的就是情绪，不是价值。"],
-     gold:"高市盈率不是在为现在付钱，而是在为想象付钱。"},
+     sum:"市场愿意为这家公司未来每 1 元利润，现在先付 348 元——它买的不是今天的公司，而是几年后可能变得很大的公司。",
+     alt:"简单说：348 倍 = 你为它未来每赚 1 块，现在先掏 348 块。买的是它“以后会很牛”的故事；故事一破，跌得也快。",
+     ex:"一家奶茶店一年净赚 1 万元，却有人愿意花 348 万元买下它。他赌的不是这 1 万元，而是这家店未来能开几百家。",
+     why:["高 PE = 高预期：市场已经相信它会爆发式成长。","高预期也 = 高脆弱：一旦业绩不及预期，跌起来会比普通公司更狠。"],
+     next:["把它和同行业公司比较，再看未来 3 年利润增速能否撑起估值（可参考 PEG）。","判断是否合理，取决于增速与风险，而不是单看倍数高低。"],
+     caveat:"这是通俗简化：市盈率高低还要结合行业属性、盈利质量与周期位置，不能单独作为买卖依据。"},
     {id:"s2",t:"为什么美国降息会影响中国股市？",terms:["降息","美联储"],
-     sum:"全球的钱像水，哪里回报高就往哪流；美国降息 = 美国的水位变低，钱会溢出到别的市场——包括估值更便宜的中国资产。",
-     alt:"一句话：美国降息 = 存在美国的钱利息变少，钱开始往外跑；中国这类市场更容易被“水”漫到。",
-     ex:"把全球资金想成一大池水：美国利率高时，水都被抽去美国吃利息；一降息，存着不划算了，水就流向能赚钱的地方。",
-     why:["股市短期看资金往哪走，长期才看公司本身。","所以“美国降息”常被解读为新兴市场的放水信号——不是立刻涨，而是水更容易流过来。"],
-     next:["把美联储议息日历加进关注，利率决议前后市场波动会加大。","与其猜消息，不如观察外资（北向资金）是不是真的在持续流入。"],
-     gold:"利息是资金的地心引力：引力一变，钱就开始搬家。"},
+     sum:"美国降息会让美元资产的收益率吸引力下降，一部分全球资金可能去寻找别的市场，中国资产可能因此受到资金流动和估值变化的影响。",
+     alt:"一句话：美国降息 = 存在美国的钱利息变少，一部分钱开始往外找机会，中国这类市场更容易被“水”漫到。",
+     ex:"把全球资金想成一大池水：美国利率高时，水被抽去美国吃利息；一降息，一部分水就流向回报更高的地方。",
+     why:["股市短期受资金流向影响较大，长期才看公司基本面。","“美国降息”常被解读为对新兴市场的资金面利好信号。"],
+     next:["可以关注美联储议息时间表，以及外资（如北向资金）是否持续流入。","记住：资金流动只是众多因素之一，降息不等于市场一定上涨。"],
+     caveat:"降息只是影响市场的众多因素之一；资金流向还受汇率、增长预期、风险偏好等影响，不是“降息必涨”。"},
     {id:"s3",t:"GPU 采用 Chiplet 架构来提升带宽。",terms:["chiplet","带宽"],
-     sum:"把原来一块难造的大芯片，拆成几块小芯片像拼积木一样组装；带宽就是数据通道的宽度，通道越宽，一次搬的数据越多。",
+     sum:"把原来一块难造的大芯片，拆成几块小芯片拼装起来；带宽就是数据通道的宽度，通道越宽，一次能搬的数据越多。",
      alt:"大白话：以前是一整块难造的大芯片，现在改成几块小芯片拼装；带宽就是数据管道有多宽，拼装让管道更好加宽。",
-     ex:"一条大街太宽很难一次修好，就分成几段分别修、再拼起来；“带宽”等于这条路有几条车道——Chiplet 让车道能加得更快。",
+     ex:"一条大街太宽很难一次修好，就分成几段分别修、再拼起来；“带宽”等于这条路有几条车道。",
      why:["大芯片越大越难造（良率低、成本高），Chiplet 是绕开“造不出超大芯片”的务实解法。","AI 计算最怕的不是算得慢，而是数据喂不进去（内存墙），带宽决定喂数据的速度。"],
-     next:["以后看到 Chiplet，直接理解成“小芯片拼装”就不会被唬住。","判断 AI 芯片强不强：除了算力，还要看带宽（如 HBM 容量）和互联。"],
-     gold:"算力决定能算多快，带宽决定能喂多快。"},
+     next:["看到 Chiplet 就理解为“小芯片拼装”。","判断 AI 芯片强弱时，把算力和带宽（如 HBM 容量、互联带宽）放在一起看。"]},
     {id:"s4",t:"Transformer 架构是 GPT 这类大模型的基础。",terms:["transformer"],
      sum:"Transformer 是一套“边读边挑重点”的机制：模型读每个词时，都会计算它和上下文里其他词的关系强弱，再决定注意力放在哪。",
      alt:"打个比方：读一句话时给每个词和上下文“打分”，重点词多看一眼——Transformer 就是干这个的，GPT 全靠它。",
      ex:"就像你读长文不会逐字平均用力，而是自动给关键词打高亮——Transformer 就是让机器学会“哪里值得多看两眼”的高亮系统。",
      why:["它能同时处理整句话，训练速度远超逐字读的老方法，大模型才成为可能。","懂了“注意力”，就懂了大模型为什么“懂上下文”，而不是死记硬背。"],
-     next:["把注意力想成“打分”：模型给相关词打高分，再按分数加权理解。","入门看大模型文章抓住 4 个词即可：Token、参数、上下文窗口、注意力。"],
-     termsExtra:["token","上下文窗口","参数"],gold:"大模型不是背下了世界，而是学会了把注意力放在对的地方。"},
+     next:["把注意力想成“打分”：模型给相关词打高分，再按分数加权理解。","入门看大模型文章抓住 4 个词：Token、参数、上下文窗口、注意力。"],
+     termsExtra:["token","上下文窗口","参数"]},
     {id:"s5",t:"这个项目的 ROI 有 15%，值得投吗？",terms:["roi"],
      sum:"ROI = 投入产出比：投 100 元赚回 15 元。但它只告诉你赚多少，没告诉你多久赚到、有多稳。",
      alt:"别被 15% 唬住：先问多久赚到、会不会亏光。投 100 赚 15 只是一张成绩单，不是买入理由。",
      ex:"花 1000 元投广告，带来 1150 元利润，ROI 就是 15%。听起来不错，但要问：这是一个月的，还是一年的？",
      why:["15% 本身没意义，要结合“周期”和“风险”看。","对比无风险收益（国债约 2%），15% 才有吸引力；如果可能亏光本金，再高也不值。"],
-     next:["先问三件事：周期多长？最坏亏多少？凭什么能到 15%？","把所有项目换算成“年化”再比较，别被单次回报率骗了。"],
-     gold:"回报率要先问两个问题：多久？多稳？"},
+     next:["先看三个要素：周期多长、最坏亏多少、凭什么能达到 15%。","把所有项目换算成“年化”再比较，别被单次回报率误导。"],
+     caveat:"本文只解释指标含义，不构成投资建议。"},
     {id:"s6",t:"复利是世界的第八大奇迹？",terms:["复利"],
      sum:"复利 = 利息也能再生利息。它不神奇，神奇的是时间：同样 10 万，年化 10%，30 年后约 174 万。",
      alt:"复利就是“利息也生利息”，滚久了很可怕；它的对手不是收益率，是你等不等得起。",
      ex:"滚雪球：雪球变大后，每滚一圈沾到的新雪也更多。复利最大的难题，是大多数人等不到第 20 圈。",
      why:["它揭示了“慢慢变富”的数学：收益率 × 时间 × 不中断。","反过来它也是陷阱：亏损也会复利——每年亏 20%，回本要涨 25%。"],
-     next:["别追求暴利，先做到不中断：持续投入、别频繁折腾。","用 72 法则心算：72 ÷ 年化收益率 ≈ 本金翻倍的年数。"],
-     gold:"时间站在复利这边，只要你不在中途下车。"},
+     next:["别追求暴利，先做到不中断：持续投入、别频繁折腾。","用 72 法则心算：72 ÷ 年化收益率 ≈ 本金翻倍的年数。"]},
     {id:"s7",t:"Token、上下文窗口、参数，分别是什么意思？",terms:["token","上下文窗口","参数"],
-     sum:"Token 是模型读文本的“积木块”；上下文窗口是它一次能看多长；参数是它的“脑容量旋钮”。三者决定一个模型能读多细、记多久、想多深。",
-     alt:"Token=积木块，上下文窗口=一次能拼多长，参数=脑容量旋钮。看模型先看这三样。",
+     sum:"Token 是模型读文本的“积木块”；上下文窗口是它一次能看多长；参数体现模型规模，但参数多不等于一定更聪明。",
+     alt:"Token=积木块，上下文窗口=一次能拼多长，参数=规模旋钮。看模型先看这三样。",
      ex:"把模型想成一个读书的人：Token 是他读到的每个字词，上下文窗口是他面前能摊开的书页数，参数是他的脑容量。",
-     why:["看 AI 产品参数不再被术语唬住：这 3 个词能解释 80% 的“配置差异”。","上下文窗口决定你能不能把整份文档丢给它；参数大致对应能力上限。"],
-     next:["记一个组合：“Token 是单位，窗口是长度，参数是规模”。","选模型时先问：我的输入有多长（窗口够不够）？预算按多少 Token 算？"],
-     gold:"看得懂这三个词，就看得懂大部分 AI 评测。"},
+     why:["看 AI 产品参数不再被术语唬住：这 3 个词能解释 80% 的“配置差异”。","上下文窗口决定你能不能把整份文档丢给它；参数大致对应规模，能力还看数据与训练。"],
+     next:["记一个组合：“Token 是单位，窗口是长度，参数是规模”。","选模型时先问：我的输入有多长（窗口够不够）？预算按多少 Token 算？"]},
     {id:"s8",t:"PB 和 PE 有什么区别？",terms:["pb","pe"],
      sum:"PE 看“每年赚多少”，PB 看“家底净资产值多少”。成长型公司（消费、科技）更看 PE；资产型公司（银行、地产）更看 PB。",
      alt:"PE 问“几年回本”，PB 问“花几倍买它的家底”。成长公司看 PE，银行地产看 PB。",
      ex:"PE：一家店一年净赚 10 万、卖 100 万 → 10 年回本（PE=10）。PB：这家店账面资产值 50 万、卖 100 万 → 你花 2 倍价格买它的家底（PB=2）。",
      why:["用错指标会误判贵贱：银行利润波动小、看“家底”更可靠；科技公司家底轻、看“赚钱能力”更可靠。","两个指标都低时，要先问“为什么便宜”，而不是急着抄底。"],
      next:["银行、保险、地产：优先看 PB；消费、科技、成长：优先看 PE。","“便宜”要有理由：是错杀，还是基本面真在变差？"],
-     gold:"指标没有好坏，只有用对地方。"}
+     caveat:"指标没有好坏，只有用对地方；任何单一指标都不足以支撑投资决策。"},
+    {id:"s9",t:"为什么公司营收增长很快，利润反而下降？",terms:["毛利率"],
+     sum:"收入变多不等于赚钱变多：可能是卖得越多成本涨得更快（毛利被压低），或为了增长多花了大量销售/管理费用。",
+     alt:"赚的钱变多了，但花得更多——尤其卖东西的成本涨得比收入还快，或为了冲量拼命打广告、招人。",
+     ex:"奶茶店营业额翻倍，但每杯都靠打折换来的，还新租了三家店、请了一批人，年底一算反而亏了。",
+     why:["“增长快”和“更赚钱”是两件事：要看毛利和净利是否跟得上收入。","利润下降的常见原因：成本上升、降价促销、费用前置（扩张投入）。"],
+     next:["对比收入增速与成本/费用增速，看毛利率、净利率的变化趋势。","问一句：现在的投入是在换未来的增长，还是商业模式本身不赚钱？"]},
+    {id:"s10",t:"通过模型蒸馏降低推理成本。",terms:["蒸馏"],
+     sum:"让一个“大老师”模型教一个“小学生”模型：小模型学会大模型的行为，用更小算力做到接近的效果，从而降低成本。",
+     alt:"大模型当老师，小模型抄作业学到八九成——小模型跑得快又便宜。",
+     ex:"资深师傅把自己的解题思路一条条教给学徒，学徒不必每次都比师傅强，遇到大多数题能搞定、收费还低。",
+     why:["大模型效果好但推理贵、速度慢；蒸馏能把一部分能力装进小模型。","做 C 端产品时，蒸馏是降低每次调用成本的关键手段。"],
+     next:["看到“蒸馏版模型”，就理解为“用小模型复刻大模型的一部分能力”。","评估时要看它在你的任务上到底差多少，而不只是看参数规模。"]},
+    {id:"s11",t:"这个方案需要进一步提升组织协同效率。",terms:[],
+     sum:"这是一句典型的“场面话”：它没有说要做什么，翻译过来是“大家配合得不够顺，事情推进得有点乱、有点慢”。",
+     alt:"大白话：现在大家各干各的、对接不顺，活儿干得慢，得想个办法让配合更顺。",
+     ex:"像十个人划一条船，桨划得不齐，船在原地打转——“提升协同效率”就是让大家一起喊口号、划得整齐。",
+     why:["识别“黑话”是认知翻译的另一种价值：把空话还原成它真正在说的问题。","听懂场面话，你才知道别人到底在要求什么，而不是只回复“好的”。"],
+     next:["遇到这类话，追问一句：“具体是哪个环节配合不顺？希望我改什么？”","把它翻译成可执行的问题：谁、在什么环节、卡在哪、需要什么支持。"]}
   ];
-
-  /* ---------- 渲染示例 chips ---------- */
-  function chipsHtml(){
-    return SAMPLES.map(function(s,i){
-      return '<button type="button" class="ct-chip" data-act="sample" data-id="'+s.id+'" data-i="'+i+'">'+esc(s.t)+'</button>'}).join("");
-  }
-  document.getElementById("ct2-samples").innerHTML=chipsHtml();
+  function chipsHtml(){return SAMPLES.map(function(s){return '<button type="button" class="ct-chip" data-act="sample" data-id="'+s.id+'">'+esc(s.t)+'</button>'}).join("")}
+  document.getElementById("ct4-samples").innerHTML=chipsHtml();
   function sampleById(id){for(var i=0;i<SAMPLES.length;i++){if(SAMPLES[i].id===id)return SAMPLES[i]}return null}
   function keysOf(s){var k=(s.terms||[]).slice();if(s.termsExtra){k=k.concat(s.termsExtra)}return k}
 
-  /* ---------- 高亮与词条 ---------- */
-  function hl(text,keys){
-    var html=esc(text);
-    for(var i=0;i<keys.length;i++){
-      var r=termKey(keys[i]);if(!r)continue;
-      var flags=r.re.flags.indexOf("g")>-1?r.re.flags:r.re.flags+"g";
-      var g=new RegExp(r.re.source,flags);
-      html=html.replace(g,function(m){
-        return '<button type="button" class="ct-hl" data-act="term" data-key="'+keys[i]+'">'+esc(m)+'</button>'});
-    }
+  /* ---------- 卡点高亮：先对原文分词标记，再生成 HTML ---------- */
+  function registerTerms(list){
+    aiTips={};aiTipSeq=0;
+    var keys=[];
+    list.forEach(function(x,i){var k="ai"+i;aiTips[k]={k:x.label,short:x.short,ex:x.ex||null};keys.push(k)});
+    return keys;
+  }
+  function hlHtml(text,list){
+    // list: [{lit, keyIdx}] -> 生成按位置标注的 HTML（key 为 ai+idx）
+    var ranges=[];
+    list.forEach(function(x){
+      if(!x.lit)return;
+      var idx=text.indexOf(x.lit),guard=0;
+      while(idx>-1&&guard<30){
+        ranges.push([idx,idx+x.lit.length,x.keyIdx]);guard++;
+        idx=text.indexOf(x.lit,idx+x.lit.length);
+      }
+    });
+    ranges.sort(function(a,b){return a[0]-b[0]||b[1]-a[1]});
+    var keep=[];
+    ranges.forEach(function(r){var last=keep[keep.length-1];if(!last||r[0]>=last[1])keep.push(r)});
+    var html="",pos=0;
+    keep.forEach(function(r){
+      html+=esc(text.slice(pos,r[0]))+
+        '<button type="button" class="ct-hl" data-act="term" data-key="ai'+r[2]+'" aria-expanded="false" aria-controls="ct4-tips">'+esc(text.slice(r[0],r[1]))+'</button>';
+      pos=r[1];
+    });
+    html+=esc(text.slice(pos));
     return html;
   }
   function chipRow(keys){
     if(!keys||!keys.length)return "";
-    return '<div class="ct-chips" style="margin:4px 0 0">'+keys.map(function(k){var t=TERMS[k]||aiTips[k];return t?'<button type="button" class="ct-chip term" data-act="term" data-key="'+k+'">'+esc(t.k)+'</button>':""}).join("")+'</div>';
+    return '<div class="ct-chips" style="margin:4px 0 0">'+keys.map(function(k){var t=aiTips[k];return t?'<button type="button" class="ct-chip term" data-act="term" data-key="'+k+'" aria-expanded="false" aria-controls="ct4-tips">'+esc(t.k)+'</button>':""}).join("")+'</div>';
   }
   function tipHtml(k){
-    var t=TERMS[k]||aiTips[k];if(!t)return "";
+    var t=aiTips[k];if(!t)return "";
     return '<b>'+esc(t.k)+'</b><p>'+esc(t.short)+'</p>'+(t.ex?'<div class="ct-tipex">生活例子：'+esc(t.ex)+'</div>':"");
   }
   function toggleTip(key){
     var box=out.querySelector(".ct-tips");
     if(!box)return;
     var old=box.querySelector('.ct-tip[data-key="'+key+'"]');
-    if(old){old.classList.remove("on");setTimeout(function(){old.remove()},220);return}
+    var btns=out.querySelectorAll('[data-act="term"][data-key="'+key+'"]');
+    if(old){
+      old.classList.remove("on");
+      setTimeout(function(){old.remove()},220);
+      for(var i=0;i<btns.length;i++)btns[i].setAttribute("aria-expanded","false");
+      return;
+    }
     var el=document.createElement("div");
-    el.className="ct-tip";
-    el.setAttribute("data-key",key);
+    el.className="ct-tip";el.setAttribute("data-key",key);
     el.innerHTML=tipHtml(key);
     box.appendChild(el);
     requestAnimationFrame(function(){el.classList.add("on")});
+    for(var j=0;j<btns.length;j++)btns[j].setAttribute("aria-expanded","true");
   }
 
   /* ---------- 输出 ---------- */
+  function modeBadge(kind){return '<div class="ct-mode"><span class="ct-modebadge '+(kind==="ai"?"ai":"base")+'">'+(kind==="ai"?"AI · 整句翻译":"基础模式 · 术语解释")+'</span></div>'}
   function block(no,label,inner){return '<div class="ct-blk"><h4><span class="no">'+no+'</span>'+esc(label)+'</h4>'+inner+'</div>'}
+  function heroCard(sum,useAlt,alt,canVariant,label){
+    return '<div class="ct-herocard"><div class="ct-hlbl">'+esc(label)+'</div>'+
+      '<p class="ct-herotext">'+((useAlt&&alt)?'<span class="ct-vmark">口语版</span>':"")+esc(useAlt&&alt?alt:sum)+'</p>'+
+      (canVariant?'<div class="ct-herofoot"><button type="button" class="ct-vbtn" data-act="variant" id="ct4-vbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h16M4 15h16M10 3 8 21M16 3l-2 18"/></svg>换个说法</button><span class="ct-vtag" id="ct4-vtag">'+(useAlt&&alt?"当前：B 版（更口语）":"当前：A 版")+'</span></div>':"")+'</div>';
+  }
+  function caveatCard(txt){return txt?'<div class="ct-caveat"><b>一句提醒 ·</b> '+esc(txt)+'</div>':""}
   function feedbackHtml(){
-    return '<div class="ct-feedback"><span class="ct-fb-txt">这版翻译对你有帮助吗？</span>'+
-      '<div class="ct-stars">'+[1,2,3,4,5].map(function(n){return '<button type="button" class="ct-star" data-act="star" data-val="'+n+'" aria-label="'+n+' 星">★</button>'}).join("")+'</div>'+
-      '<button type="button" class="ct-copy" data-act="copy">复制这段翻译</button>'+
-      '<div class="ct-follow"><div class="ct-fh">还差点什么？（这会是正式版 AI 追问的方向）</div>'+
-      '<div class="ct-chips">'+
-      '<button type="button" class="ct-chip" data-act="fup" data-v="ex">例子还不够生活化</button>'+
-      '<button type="button" class="ct-chip" data-act="fup" data-v="whole">整句还是没懂</button>'+
-      '<button type="button" class="ct-chip" data-act="fup" data-v="why">想再追问一层为什么</button>'+
-      '<button type="button" class="ct-chip" data-act="fup" data-v="next">想要更具体的下一步</button></div></div></div>';
+    return '<div class="ct-feedback" role="group" aria-label="反馈"><span class="ct-fb-txt">对你有帮助吗？</span>'+
+      '<div class="ct-stars">'+[1,2,3,4,5].map(function(n){return '<button type="button" class="ct-star" data-act="star" data-val="'+n+'" aria-label="'+n+' 星" aria-pressed="false">★</button>'}).join("")+'</div>'+
+      '<button type="button" class="ct-copy" data-act="copy">复制</button></div>'+
+      '<div class="ct-followrow"><span class="ct-fh">还没懂？让我换个方式：</span>'+
+      '<button type="button" class="ct-chip" data-act="fup" data-v="again">还是没懂</button>'+
+      '<button type="button" class="ct-chip" data-act="fup" data-v="why">为什么</button>'+
+      '<button type="button" class="ct-chip" data-act="fup" data-v="case">举个真实例子</button></div>'+
+      '<div class="ct-followstack"></div>';
   }
   function renderSample(s,useAlt){
-    var keys=keysOf(s);
+    var list=[];var keys=keysOf(s);
+    keys.forEach(function(key){
+      var t=TERMS[key];if(!t)return;
+      var lit=litOf(s.t,key);
+      list.push({lit:lit,label:t.k,short:t.short,ex:t.ex});
+    });
+    var regKeys=registerTerms(list);
     var html="";
-    html+='<div class="ct-asked"><b>你问的是 · </b><span class="ct-q">'+hl(s.t,keys)+'</span></div>';
-    html+=chipRow(keys)+'<div class="ct-tips"></div>';
-    if(keys.length)html+='<div class="ct-hint" style="margin:-2px 0 10px">👆 点黄色的词，立刻换成大白话</div>';
-    if(s.alt)html+='<div class="ct-vrow"><button type="button" class="ct-vbtn" data-act="variant" id="ct2-vbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h16M4 15h16M10 3 8 21M16 3l-2 18"/></svg>换个说法 · 像朋友再讲一遍</button><span class="ct-vtag" id="ct2-vtag">'+((useAlt&&s.alt)?"当前：B 版（更口语）":"当前：A 版（原译）")+'</span></div>';
-    html+=block(1,"一句话 · 30 秒看懂",'<p class="ct-sum">'+((useAlt&&s.alt)?'<span class="ct-vmark">口语版</span>':'')+esc(useAlt&&s.alt?s.alt:s.sum)+'</p>');
-    html+=block(2,"生活里的例子",'<p>'+esc(s.ex)+'</p>');
-    html+=block(3,"为什么重要",'<ul>'+li(s.why)+'</ul>');
-    html+=block(4,"下一步建议",'<ul>'+li(s.next)+'</ul>');
-    if(s.gold)html+='<div class="ct-gold"><b>一句带走 ·</b> '+esc(s.gold)+'</div>';
+    html+=modeBadge("base");
+    html+='<div class="ct-asked"><b>原文 · </b><span class="ct-q">'+hlHtml(s.t,list.map(function(x,i){return{lit:x.lit,keyIdx:i}}))+'</span></div>';
+    if(regKeys.length){html+=chipRow(regKeys)+'<div class="ct-tips" id="ct4-tips"></div><div class="ct-hint" style="margin:-2px 0 10px">👆 黄色 = 你可能卡住的地方，点开即译</div>'}
+    html+=heroCard(s.sum,useAlt,s.alt,!!s.alt,"这句话真正想说的是");
+    html+=caveatCard(s.caveat);
+    html+='<div class="ct-cols">'+block(1,"为什么这么说",'<ul>'+li(s.why)+'</ul>')+block(2,"一个生活化例子",'<p>'+esc(s.ex)+'</p>')+block(3,"下一步可以关注什么",'<ul>'+li(s.next)+'</ul>')+'</div>';
     html+=feedbackHtml();
     return html;
   }
-  function renderCustom(text){
+  function renderCustomNoAI(text){
     var keys=detect(text);
-    var fm=findTermsIn(text,keys);
+    var list=keys.map(function(key){var t=TERMS[key];return{lit:litOf(text,key),label:t.k,short:t.short,ex:t.ex}});
+    var regKeys=registerTerms(list);
     var html="";
-    html+='<div class="ct-asked"><b>你贴的是 · </b><span class="ct-q">'+hl(text,fm.ok)+'</span></div>';
-    if(keys.length){
-      html+=chipRow(keys)+'<div class="ct-tips"></div>';
-      html+='<div class="ct-hint" style="margin:-2px 0 12px">👆 点黄色的词，立刻换成大白话</div>';
-      html+='<div class="ct-blk"><h4><span class="no">1</span>这句话在说什么</h4><p>这句话在围绕'+keys.map(function(k){return TERMS[k]?esc(TERMS[k].k):""}).join("、")+'展开——把上面的词换成大白话，整句的意思基本就通了。</p></div>';
-      html+='<div class="ct-blk"><h4><span class="no">2</span>下一步建议</h4><ul><li>把原句里的术语逐个替换成上面的解释，再用自己的话复述一遍。</li><li>正式版会由 AI 把整句重新翻译，并补上“生活例子、为什么重要、下一步行动”。</li></ul></div>';
-      html+=feedbackHtml();
+    html+=modeBadge("base");
+    html+='<div class="ct-asked"><b>原文 · </b><span class="ct-q">'+hlHtml(text,list.map(function(x,i){return{lit:x.lit,keyIdx:i}}))+'</span></div>';
+    html+='<div class="ct-notcover">';
+    if(regKeys.length){
+      html+='<b>这句话暂时超出了内置词库，我不能假装已经整句翻译。</b><br>目前能帮你拆出这些可能卡住的词：';
+      html+=chipRow(regKeys)+'<div class="ct-tips" id="ct4-tips"></div>';
+      html+='<div class="ct-hint">把上面的词换成大白话，能读懂一大半；想整句翻译成人话，请启用 AI 模式。</div>';
     }else{
-      html+='<div class="ct-card soft"><div class="ct-label">这句不在演示词库里</div><p style="font-size:13.5px">原型内置了财经/AI/职场常见词的“卡点词库”，暂未覆盖这句。正式版由大模型实时翻译任意内容，并输出同样的四段式结构。</p><div class="ct-chips" style="margin-top:10px">'+chipsHtml()+'</div></div>';
+      html+='<b>这句话暂时超出了内置词库。</b><br>基础模式只做“术语拆解”，没法无中生有地整句翻译；想翻译任意句子，请启用 AI 模式。';
+      html+='<div class="ct-chips">'+chipsHtml()+'</div>';
     }
+    html+='<div class="ct-row" style="margin-top:12px"><button type="button" class="ct-btn primary" data-act="open-ai">启用 AI 整句翻译</button></div></div>';
     return html;
   }
   function renderAI(data,text,useAlt){
-    data=data||{};aiTips={};aiTipSeq=0;
-    var sum=String(data.summary||"AI 没能给出总结，请重试。").trim();
-    var alt=String(data.alt||"").trim();
-    var example=String(data.example||"（换个角度想：把它套到一件日常小事上，往往就通了。）").trim();
-    var why=Array.isArray(data.why)&&data.why.length?data.why.map(String):["（AI 未给出）"];
-    var next=Array.isArray(data.next)&&data.next.length?data.next.map(String):["（AI 未给出）"];
-    var rawTerms=Array.isArray(data.terms)?data.terms:[];
-    var keys=[];
-    rawTerms.forEach(function(tt){
-      if(!tt||!tt.term)return;
-      var k="ai"+(aiTipSeq++);
-      aiTips[k]={k:String(tt.term).slice(0,40),short:String(tt.plain||"（未提供解释）").slice(0,200)};
-      keys.push(k);
-    });
+    var list=(data.terms||[]).map(function(t){return{lit:t.term,label:t.term,short:t.plain,ex:null}});
+    var regKeys=registerTerms(list);
     var html="";
-    html+='<div class="ct-asked"><b>你问的是 · </b><span class="ct-q">'+esc(text.slice(0,500))+(text.length>500?"…":"")+'</span></div>';
-    if(keys.length){html+=chipRow(keys)+'<div class="ct-tips"></div><div class="ct-hint" style="margin:-2px 0 10px">👆 AI 认为你可能卡在这些词上，点开即译</div>'}
-    html+='<div class="ct-vrow"><button type="button" class="ct-vbtn" data-act="variant" id="ct2-vbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h16M4 15h16M10 3 8 21M16 3l-2 18"/></svg>换个说法 · 让 AI 再讲一遍</button><span class="ct-vtag" id="ct2-vtag">'+(useAlt&&alt?"当前：B 版（AI 更口语）":"当前：AI 翻译")+'</span></div>';
-    html+=block(1,"一句话 · 30 秒看懂",'<p class="ct-sum">'+((useAlt&&alt)?'<span class="ct-vmark">口语版</span>':"")+esc(useAlt&&alt?alt:sum)+'</p>');
-    html+=block(2,"生活里的例子",'<p>'+esc(example)+'</p>');
-    html+=block(3,"为什么重要",'<ul>'+li(why)+'</ul>');
-    html+=block(4,"下一步建议",'<ul>'+li(next)+'</ul>');
+    html+=modeBadge("ai");
+    html+='<div class="ct-asked"><b>原文 · </b><span class="ct-q">'+hlHtml(text.slice(0,600),list.map(function(x,i){return{lit:x.lit,keyIdx:i}}))+(text.length>600?"…":"")+'</span></div>';
+    if(regKeys.length){html+=chipRow(regKeys)+'<div class="ct-tips" id="ct4-tips"></div><div class="ct-hint" style="margin:-2px 0 10px">👆 AI 认为你可能卡在这些词上，点开即译</div>'}
+    html+=heroCard(data.summary,useAlt,data.alt,true,"这句话真正想说的是");
+    html+=caveatCard(data.caveat);
+    html+='<div class="ct-cols">'+block(1,"为什么这么说",'<ul>'+li(data.why&&data.why.length?data.why:["（AI 未给出）"])+'</ul>')+block(2,"一个生活化例子",'<p>'+esc(data.example||"（换个角度：把它套到一件日常小事上，往往就通了。）")+'</p>')+block(3,"下一步可以关注什么",'<ul>'+li(data.next&&data.next.length?data.next:["（AI 未给出）"])+'</ul>')+'</div>';
     html+=feedbackHtml();
     return html;
   }
-  function aiPlain(data,useAlt,text){
-    data=data||{};
-    var sum=String(useAlt&&data.alt?data.alt:(data.summary||"")).trim();
-    var t="【认知翻译 · 30 秒看懂】\n"+(text&&text.length<200?text:"")+"\n\n① 一句话总结\n"+sum+
-      "\n\n② 生活里的例子\n"+String(data.example||"")+"\n\n③ 为什么重要\n"+
-      (Array.isArray(data.why)?data.why.map(function(x){return "· "+x}).join("\n"):"")+
-      "\n\n④ 下一步建议\n"+(Array.isArray(data.next)?data.next.map(function(x){return "· "+x}).join("\n"):"")+"\n";
-    if(Array.isArray(data.terms)&&data.terms.length){t+="\n可能卡住的词：\n"+data.terms.map(function(x){return x&&x.term?(x.term+"："+(x.plain||"")):""}).join("\n")+"\n"}
-    return t;
-  }
-  function show(html){
-    out.innerHTML=html;
-    out.classList.add("on");
-    out.scrollIntoView({behavior:"smooth",block:"nearest"});
-  }
+  function show(html){out.innerHTML=html;out.classList.add("on");out.scrollIntoView({behavior:"smooth",block:"nearest"})}
 
-  var cur={s:null,alt:false,ai:null,text:""};
+  var cur={s:null,alt:false,ai:null,text:"",mode:""};
   function plainOf(s,useAlt){
-    var t="【认知翻译 · 30 秒看懂】\n"+s.t+"\n\n";
-    t+="① 一句话总结\n"+(useAlt&&s.alt?s.alt:s.sum)+"\n\n② 生活里的例子\n"+s.ex+"\n\n③ 为什么重要\n"+s.why.map(function(x){return "· "+x}).join("\n")+"\n\n④ 下一步建议\n"+s.next.map(function(x){return "· "+x}).join("\n")+"\n";
-    if(s.gold)t+="\n一句话带走："+s.gold+"\n";
+    var t="【认知翻译 · 30 秒看懂】\n"+s.t+"\n\n这句话真正想说的是：\n"+(useAlt&&s.alt?s.alt:s.sum)+"\n\n为什么这么说：\n"+s.why.map(function(x){return "· "+x}).join("\n")+"\n\n一个例子：\n"+s.ex+"\n\n下一步可以关注什么：\n"+s.next.map(function(x){return "· "+x}).join("\n")+"\n";
+    if(s.caveat)t+="\n一句提醒："+s.caveat+"\n";
     return t;
+  }
+  function aiPlain(data,useAlt,text){
+    var sum=String(useAlt&&data.alt?data.alt:(data.summary||"")).trim();
+    return "【认知翻译 · 30 秒看懂】\n"+(text&&text.length<200?text+"\n\n":"")+"这句话真正想说的是：\n"+sum+
+      "\n\n为什么这么说：\n"+(Array.isArray(data.why)?data.why.map(function(x){return "· "+x}).join("\n"):"")+
+      "\n\n一个例子：\n"+String(data.example||"")+
+      "\n\n下一步可以关注什么：\n"+(Array.isArray(data.next)?data.next.map(function(x){return "· "+x}).join("\n"):"")+
+      "\n"+(data.caveat?"\n一句提醒："+data.caveat+"\n":"")+
+      (Array.isArray(data.terms)&&data.terms.length?"\n可能卡住的词：\n"+data.terms.map(function(x){return x&&x.term?(x.term+"："+(x.plain||"")):""}).join("\n")+"\n":"");
   }
   function buildPlain(){
     if(cur.ai)return aiPlain(cur.ai,cur.alt,cur.text);
@@ -468,7 +556,7 @@
     return "";
   }
 
-  /* ---------- 本地规则翻译（不依赖 AI） ---------- */
+  /* ---------- 本地规则 ---------- */
   function runLocal(text){
     waiting.classList.add("on");
     waitText("正在找出你最容易卡住的地方…");
@@ -479,8 +567,8 @@
       var s=null;
       for(var j=0;j<SAMPLES.length;j++){if(norm(SAMPLES[j].t)===norm(text)){s=SAMPLES[j];break}}
       if(!s&&text.length<50){for(var k=0;k<SAMPLES.length;k++){var n=norm(SAMPLES[k].t);if(n.indexOf(norm(text))>-1||norm(text).indexOf(n)>-1){s=SAMPLES[k];break}}}
-      cur={s:s,alt:false,ai:null,text:text};
-      var html=s?renderSample(s,false):renderCustom(text);
+      cur={s:s,alt:false,ai:null,text:text,mode:"base"};
+      var html=s?renderSample(s,false):renderCustomNoAI(text);
       show(html);
     },650);
   }
@@ -490,17 +578,17 @@
     var text=(ta.value||"").trim();
     if(!text){ta.focus();toast("先粘一句没看懂的话");return}
     var cfg=loadAI();
-    if(cfg&&cfg.key){
+    if(cfg&&(cfg.key||cfg.proxy)){
       waiting.classList.add("on");
       waitText("AI 正在把它翻译成大白话（约几秒）…");
       out.classList.remove("on");
       aiCall(text).then(function(d){
         waiting.classList.remove("on");
-        cur={s:null,alt:false,ai:d,text:text};
+        cur={s:null,alt:false,ai:d,text:text,mode:"ai"};
         show(renderAI(d,text,false));
       }).catch(function(err){
         waiting.classList.remove("on");
-        toast("AI 调用失败："+(err&&err.message?err.message:"网络错误")+"，已改用内置词库");
+        toast("AI 调用失败："+(err&&err.message?err.message:"网络错误")+"，已改为基础模式（术语拆解）");
         runLocal(text);
       });
       return;
@@ -509,22 +597,39 @@
   }
   function aiVariant(){
     if(!cur.ai)return;
-    var vtag=out.querySelector("#ct2-vtag");
+    var vtag=out.querySelector("#ct4-vtag");
     if(vtag)vtag.textContent="AI 换说法中…";
-    aiCall(cur.text||"","","你是「认知翻译」。用更口语、像朋友聊天的方式，把这句话总结重写一遍。严格只输出 JSON：{\"alt\":\"更口语的一句话总结(1-2句)\"}").then(function(d){
+    aiCall(cur.text||"","",AI_VAR_SYS).then(function(d){
       if(!cur.ai)return;
       if(d&&d.alt)cur.ai.alt=String(d.alt);
       cur.alt=true;
-      var v2=out.querySelector("#ct2-vtag");if(v2)v2.textContent="当前：B 版（AI 更口语）";
-      var sum=out.querySelector(".ct-blk .ct-sum");
-      if(sum&&cur.ai.alt){sum.innerHTML='<span class="ct-vmark">口语版</span>'+esc(cur.ai.alt)}
+      var v2=out.querySelector("#ct4-vtag");if(v2)v2.textContent="当前：B 版（更口语）";
+      var hero=out.querySelector(".ct-herotext");
+      if(hero&&cur.ai.alt)hero.innerHTML='<span class="ct-vmark">口语版</span>'+esc(cur.ai.alt);
     }).catch(function(err){
       toast("AI 换说法失败："+(err&&err.message?err.message:"网络错误"));
-      var v3=out.querySelector("#ct2-vtag");if(v3)v3.textContent="当前：AI 翻译";
+      var v3=out.querySelector("#ct4-vtag");if(v3)v3.textContent="当前：A 版";
+    });
+  }
+  function aiFollow(kind){
+    var labels={again:"还是没懂 · 换个例子",why:"为什么 · 再讲一层原理",case:"举个真实例子"};
+    var stack=out.querySelector(".ct-followstack");
+    if(!stack)return;
+    var card=document.createElement("div");
+    card.className="ct-followcard";
+    card.innerHTML='<div class="ct-fl">'+(labels[kind]||"继续解释")+'</div><span class="ct-spin" style="display:inline-block;vertical-align:-2px"></span> AI 正在换个方式解释…';
+    stack.appendChild(card);
+    aiCall(cur.text||"","",AI_FOLLOW_SYS[kind]).then(function(d){
+      if(!card.isConnected)return;
+      card.innerHTML='<div class="ct-fl">'+(labels[kind]||"继续解释")+'</div><p style="white-space:pre-wrap">'+esc(String((d&&d.answer)||"（没有返回内容）"))+'</p>';
+      logFeedback({kind:"follow:"+kind,mode:cur.mode,query:cur.text});
+    }).catch(function(err){
+      if(!card.isConnected)return;
+      card.innerHTML='<div class="ct-fl">'+(labels[kind]||"继续解释")+'</div><p>解释失败：'+esc(err&&err.message?err.message:"网络错误")+'</p>';
     });
   }
   var toastTimer=null;
-  function toast(msg){var el=document.createElement("div");el.textContent=msg;el.style.cssText="position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:#333;color:#fff;padding:9px 16px;border-radius:99px;font-size:13px;z-index:99;opacity:0;transition:opacity .2s";document.body.appendChild(el);requestAnimationFrame(function(){el.style.opacity="1"});clearTimeout(toastTimer);toastTimer=setTimeout(function(){el.style.opacity="0";setTimeout(function(){el.remove()},250)},2000)}
+  function toast(msg){var el=document.createElement("div");el.setAttribute("role","status");el.textContent=msg;el.style.cssText="position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:#333;color:#fff;padding:9px 16px;border-radius:99px;font-size:13px;z-index:99;opacity:0;transition:opacity .2s";document.body.appendChild(el);requestAnimationFrame(function(){el.style.opacity="1"});clearTimeout(toastTimer);toastTimer=setTimeout(function(){el.style.opacity="0";setTimeout(function(){el.remove()},250)},2000)}
 
   ROOT.addEventListener("click",function(e){
     var el=e.target.closest?e.target.closest("[data-act]"):null;
@@ -532,22 +637,26 @@
     var act=el.getAttribute("data-act");
     if(act==="sample"){var s=sampleById(el.getAttribute("data-id"));if(s){ta.value=s.t;translate()}}
     else if(act==="go")translate();
-    else if(act==="clear"){ta.value="";out.classList.remove("on");cur={s:null,alt:false,ai:null,text:""};ta.focus()}
+    else if(act==="clear"){ta.value="";out.classList.remove("on");cur={s:null,alt:false,ai:null,text:"",mode:""};ta.focus()}
     else if(act==="term")toggleTip(el.getAttribute("data-key"));
+    else if(act==="open-ai"){
+      var d=document.getElementById("ct4-aicfg");if(d){d.open=true}
+      d&&d.scrollIntoView({behavior:"smooth",block:"center"});
+      toast("在 AI 设置里填入你的 DeepSeek 密钥（或自有后端代理地址）");
+    }
     else if(act==="variant"){
       if(cur.ai){aiVariant();return}
-      if(!cur.s)return;
+      if(!cur.s||!cur.s.alt)return;
       cur.alt=!cur.alt;
-      var box=out.querySelector("#ct2-vtag");
-      if(box)box.textContent=cur.alt?"当前：B 版（更口语）":"当前：A 版（原译）";
-      // 重绘 summary 块内容
-      var sum=out.querySelector(".ct-blk .ct-sum");
-      if(sum){sum.innerHTML=(cur.alt&&cur.s.alt?'<span class="ct-vmark">口语版</span>':"")+esc(cur.alt&&cur.s.alt?cur.s.alt:cur.s.sum)}
+      var vtag=out.querySelector("#ct4-vtag");
+      if(vtag)vtag.textContent=cur.alt?"当前：B 版（更口语）":"当前：A 版";
+      var hero=out.querySelector(".ct-herotext");
+      if(hero)hero.innerHTML=(cur.alt?'<span class="ct-vmark">口语版</span>':"")+esc(cur.alt?cur.s.alt:cur.s.sum);
     }
     else if(act==="copy"){
       var plain=buildPlain();
       if(!plain){toast("没有可复制的内容");return}
-      function done(){el.textContent="已复制 ✓";el.classList.add("done");setTimeout(function(){el.textContent="复制这段翻译";el.classList.remove("done")},1800)}
+      function done(){el.textContent="已复制 ✓";el.classList.add("done");setTimeout(function(){el.textContent="复制";el.classList.remove("done")},1800)}
       function fb(){var t=document.createElement("textarea");t.value=plain;document.body.appendChild(t);t.select();try{document.execCommand("copy")}catch(err){}t.remove()}
       if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(plain).then(function(){done()},function(){fb();done()})}
       else{fb();done()}
@@ -555,44 +664,49 @@
     else if(act==="star"){
       var val=parseInt(el.getAttribute("data-val"),10);
       var stars=out.querySelectorAll(".ct-star");
-      for(var i=0;i<stars.length;i++){stars[i].classList.toggle("on",i<val)}
-      var f=out.querySelector(".ct-follow");if(f)f.classList.add("on");
-      toast(val>=4?"谢谢！哪里还能更好，点下面告诉我。":"收到，我们会继续改进这版翻译。");
+      for(var i=0;i<stars.length;i++){stars[i].classList.toggle("on",i<val);stars[i].setAttribute("aria-pressed",i<val?"true":"false")}
+      logFeedback({kind:"rating",value:val,mode:cur.mode,query:cur.text});
+      toast(val>=4?"谢谢！哪里还能更好，点下面三个按钮。":"收到，我们会继续改进这版解释。");
     }
     else if(act==="fup"){
       var v=el.getAttribute("data-v");
-      var map={ex:"例子不够生活化",whole:"整句还是没懂",why:"想再追问一层为什么",next:"想要更具体的下一步"};
-      toast("已记录：“"+(map[v]||"")+"”。正式版里 AI 会按这个反馈重新翻译");
+      logFeedback({kind:"follow-click:"+v,mode:cur.mode,query:cur.text});
+      var cfg=loadAI();
+      if(cur.ai||(cfg&&(cfg.key||cfg.proxy))){aiFollow(v)}
+      else{
+        toast("基础模式只能拆词。开启 AI 后，我会换个方式再讲一遍。");
+        var d2=document.getElementById("ct4-aicfg");if(d2){d2.open=true;d2.scrollIntoView({behavior:"smooth",block:"center"})}
+      }
     }
     else if(act==="ai-save"||act==="ai-clear"||act==="ai-test"){
-      var keyEl=document.getElementById("ct2-ai-key");
-      var baseEl=document.getElementById("ct2-ai-base");
-      var modelEl=document.getElementById("ct2-ai-model");
-      var st=document.getElementById("ct2-aistatus");
+      var keyEl=document.getElementById("ct4-ai-key");
+      var proxyEl=document.getElementById("ct4-ai-proxy");
+      var baseEl=document.getElementById("ct4-ai-base");
+      var modelEl=document.getElementById("ct4-ai-model");
+      var st=document.getElementById("ct4-aistatus");
       function setSt(cls,msg){if(st){st.className="ct-aistatus "+cls;st.textContent=msg}}
       if(act==="ai-clear"){
         wipeAI();
-        if(keyEl)keyEl.value="";
-        if(baseEl)baseEl.value="";
-        if(modelEl)modelEl.value="";
-        setSt("ok","已清除本地密钥。没有密钥时，仍可用内置词库翻译常见财经/AI 词与示例句。");
-        toast("已清除 AI 密钥");
+        if(keyEl)keyEl.value="";if(proxyEl)proxyEl.value="";if(baseEl)baseEl.value="";if(modelEl)modelEl.value="";
+        setSt("ok","已清除。没有配置时为基础模式（离线术语拆解）。");
+        toast("已清除 AI 配置");
       }else{
         var k=keyEl?keyEl.value.trim():"";
+        var px=proxyEl?proxyEl.value.trim():"";
         var b=(baseEl&&baseEl.value.trim())||"https://api.deepseek.com";
         var m=(modelEl&&modelEl.value.trim())||"deepseek-chat";
-        if(!k){toast("请先粘贴你的 DeepSeek API Key");if(keyEl)keyEl.focus();return}
-        persistAI({key:k,base:b,model:m});
+        if(!k&&!px){toast("请填入 API Key 或后端代理地址");if(keyEl)keyEl.focus();return}
+        persistAI({key:k,proxy:px,base:b,model:m});
         if(act==="ai-test"){
           setSt("ok","正在测试连接…");
           aiCall("你好").then(function(){
-            setSt("ok","✓ 连接成功（模型："+m+"）。现在任意句子都能翻译。");
+            setSt("ok","✓ 连接成功（"+(px?"代理":"模型 "+m)+"）。现在任意句子都能翻译。");
             toast("AI 连接成功");
           }).catch(function(err){
-            setSt("bad","✗ 连接失败："+(err&&err.message?err.message:"网络错误")+"。请检查密钥是否正确、网络能否访问 "+b);
+            setSt("bad","✗ 连接失败："+(err&&err.message?err.message:"网络错误")+"。请检查配置与网络。");
           });
         }else{
-          setSt("ok","✓ 已保存并启用："+m+"。之后翻译任意句子都会走 AI。");
+          setSt("ok","✓ 已保存并启用"+(px?"（后端代理）":"："+m)+"。之后翻译任意句子都会走 AI。");
           toast("AI 已启用");
         }
       }
@@ -601,27 +715,26 @@
   });
   ta.addEventListener("keydown",function(e){if((e.metaKey||e.ctrlKey)&&e.key==="Enter"){e.preventDefault();translate()}});
 
-  /* ---------- 回填已保存的 AI 设置 ---------- */
+  /* ---------- 回填 AI 设置 ---------- */
   (function(){
     var cfg=loadAI();if(!cfg)return;
-    var keyEl=document.getElementById("ct2-ai-key");
-    var baseEl=document.getElementById("ct2-ai-base");
-    var modelEl=document.getElementById("ct2-ai-model");
-    var st=document.getElementById("ct2-aistatus");
+    var keyEl=document.getElementById("ct4-ai-key");
+    var proxyEl=document.getElementById("ct4-ai-proxy");
+    var baseEl=document.getElementById("ct4-ai-base");
+    var modelEl=document.getElementById("ct4-ai-model");
+    var st=document.getElementById("ct4-aistatus");
     if(keyEl)keyEl.value=cfg.key||"";
+    if(proxyEl)proxyEl.value=cfg.proxy||"";
     if(baseEl)baseEl.value=cfg.base||"";
     if(modelEl)modelEl.value=cfg.model||"";
-    if(st){st.className="ct-aistatus ok";st.textContent="已启用 AI："+(cfg.model||"deepseek-chat")+"。可直接翻译任意句子。"}
+    if(st){st.className="ct-aistatus ok";st.textContent="已启用 AI"+(cfg.proxy?"（后端代理）":("："+(cfg.model||"deepseek-chat")))+"。可直接翻译任意句子。"}
   })();
 
-  /* ---------- 划词模式：URL 带 ?text= 时自动翻译 ---------- */
+  /* ---------- 划词模式：URL 参数 ---------- */
   (function(){
     try{
-      var txt="";
-      if(location.search&&location.search.indexOf("text=")>-1){
-        txt=decodeURIComponent(location.search.replace(/^.*[?&]text=/,"").replace(/[&;].*$/,""))||"";
-      }
-      txt=(txt||"").trim();
+      var p=new URLSearchParams(location.search);
+      var txt=(p.get("text")||"").trim();
       if(!txt)return;
       ta.value=txt;
       translate();
@@ -629,7 +742,7 @@
         if(out.classList.contains("on")){
           var n=document.createElement("div");
           n.style.cssText="background:var(--accSoft);border:1px solid color-mix(in srgb,var(--acc) 30%,transparent);color:var(--acc);border-radius:12px;padding:8px 13px;font-size:12px;margin-bottom:12px";
-          n.innerHTML="<b>划词模式</b> · 已自动带入你选中的文字。在任意软件里选中文字 → 右键 → “服务 / 快速操作 → 认知翻译”，就会弹出本页。";
+          n.innerHTML="<b>划词模式</b> · 已自动带入你选中的文字。在任意软件里选中文字 → 右键 → 认知翻译（浏览器插件 / macOS 快速操作）即可唤起本页。";
           out.insertAdjacentElement("afterbegin",n);
         }
       },900);
